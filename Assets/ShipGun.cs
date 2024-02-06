@@ -16,10 +16,9 @@ public class ShipGun : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            // Debug.Log($"Clicked! {Time.time}");
+            //
             if(Time.time > m_shootRateTimeStamp)
             {
-                Debug.Log("Shot!");
                 shootRay();
                 m_shootRateTimeStamp = Time.time + shootRate;
             }
@@ -28,17 +27,22 @@ public class ShipGun : MonoBehaviour
 
     void shootRay()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hit, range))
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000, Color.green, 10f);
+        Ray ray = new Ray(transform.position, transform.forward * range);
+
+        Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
+        if (Physics.Raycast(ray, out hit, range))
         {
             GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
             GameObject.Destroy(laser, 2f);
+            Debug.Log("Hit object!");
         }
         else
         {
             GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(ray.direction * range);
+            laser.GetComponent<ShotBehavior>().setTarget(transform.forward * range);
             GameObject.Destroy(laser, 2f);
         }
     }
