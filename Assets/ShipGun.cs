@@ -35,5 +35,11 @@ public class ShipGun : MonoBehaviour
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
             GameObject.Destroy(laser, 2f);
         }
+        else
+        {
+            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
+            laser.GetComponent<ShotBehavior>().setTarget(ray.direction * range);
+            GameObject.Destroy(laser, 2f);
+        }
     }
 }
