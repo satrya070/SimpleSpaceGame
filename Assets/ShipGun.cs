@@ -42,7 +42,7 @@ public class ShipGun : MonoBehaviour
         else
         {
             GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(transform.forward * range);
+            laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * range));
             GameObject.Destroy(laser, 2f);
         }
     }
