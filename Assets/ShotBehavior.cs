@@ -4,6 +4,7 @@ using System.Collections;
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
+	public GameObject hitObject;
 	public GameObject collisionExplosion;
 	public float speed;
 
@@ -15,6 +16,12 @@ public class ShotBehavior: MonoBehaviour
 		{
 			if (transform.position == m_target)
 			{
+				if (hitObject != null)
+				{
+					GameObject.Destroy(hitObject);
+				}
+
+				// still needed?
 				explode();
 				return;
 			}
@@ -26,6 +33,11 @@ public class ShotBehavior: MonoBehaviour
 	{
 		m_target = target;
 	}
+
+	public void setHitComponent(GameObject _hitObject)
+	{
+		hitObject = _hitObject;
+    }
 
 	void explode()
 	{

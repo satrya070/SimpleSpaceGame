@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipGun : MonoBehaviour
@@ -27,8 +28,6 @@ public class ShipGun : MonoBehaviour
 
     void shootRay()
     {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000, Color.green, 10f);
         Ray ray = new Ray(transform.position, transform.forward * range);
 
         Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
@@ -36,8 +35,10 @@ public class ShipGun : MonoBehaviour
         {
             GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
+            laser.GetComponent<ShotBehavior>().setHitComponent(hit.transform.gameObject);
+
             GameObject.Destroy(laser, 2f);
-            Debug.Log("Hit object!");
+            Debug.Log($"Hit object: {hit.collider}!");
         }
         else
         {
