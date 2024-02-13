@@ -5,6 +5,7 @@ public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
 	public GameObject hitObject;
+	public GameObject laser;
 	public GameObject collisionExplosion;
 	public float speed;
 	int ShotID;
@@ -20,11 +21,12 @@ public class ShotBehavior: MonoBehaviour
 				// if hit an object with health
 				if (hitObject != null && hitObject.GetComponent<Health>() != null)
 				{	
-					// make sure that during update shot counts only once
+					// make sure that during update applyDamage prt 1 unique shot
 					if (ShotID != hitObject.gameObject.GetInstanceID())
 					{
                         ShotID = hitObject.gameObject.GetInstanceID();
                         CombatHandler.ApplyDamage(hitObject, GameObject.Find("PlayerSpaceShip").GetComponent<Damage>());
+						GameObject.Destroy(laser);
 					}
 				}
 
@@ -41,9 +43,10 @@ public class ShotBehavior: MonoBehaviour
 		m_target = target;
 	}
 
-	public void setHitComponent(GameObject _hitObject)
+	public void setHitComponents(GameObject _hitObject, GameObject _laser)
 	{
 		hitObject = _hitObject;
+		laser = _laser;
     }
 
 	void explode()

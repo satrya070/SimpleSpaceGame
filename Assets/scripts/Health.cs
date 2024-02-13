@@ -6,9 +6,12 @@ public class Health : MonoBehaviour
 {
     // public variables
     //[SerializeField]
-    public float maxHealth;
+    public int maxHealth;
 
-    public float currentHealth;
+    public int currentHealth;
+    
+    [SerializeField]
+    GameObject explosion;
 
     void Start()
     {
@@ -28,6 +31,12 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        if (explosion)
+        {
+            Debug.Log($"instantiate explosion! at: {transform.position}");
+            GameObject explode = Instantiate(explosion, transform.position, transform.rotation);//.parent.transform);
+            Destroy(explode, 1f);
+        }
         Destroy(gameObject);
     }
 }
