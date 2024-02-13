@@ -30,7 +30,7 @@ public class ShotBehavior: MonoBehaviour
 					}
 				}
 
-				// still needed? (laser explosion)
+				// TODO still needed? (laser explosion, if not delete)
 				explode();
 				return;
 			}

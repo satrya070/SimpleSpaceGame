@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSpaceship : MonoBehaviour
@@ -36,6 +37,10 @@ public class PlayerSpaceship : MonoBehaviour
 
         mouseInputX = Input.GetAxis("Mouse X");
         mouseInputY = Input.GetAxis("Mouse Y");
+
+        // temp debug test for damage
+        TestDamage();
+       
     }
 
     void FixedUpdate()
@@ -47,5 +52,16 @@ public class PlayerSpaceship : MonoBehaviour
         rb.AddTorque(rb.transform.up * speedMultAngle * mouseInputX, ForceMode.VelocityChange);
 
         rb.AddTorque(rb.transform.forward * speedRollMultAngle * rollInput, ForceMode.VelocityChange);
+    }
+
+    void TestDamage()
+    {
+        GameObject Player = GameObject.Find("PlayerSpaceShip");
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Damage TDamage = this.AddComponent<Damage>();
+            TDamage.DamagePoints = 20;
+            CombatHandler.ApplyDamage(Player, TDamage);
+        }
     }
 }
