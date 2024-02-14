@@ -4,11 +4,12 @@ using System.Collections;
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
-	public GameObject hitObject;
-	public GameObject laser;
-	public GameObject collisionExplosion;
+	GameObject hitObject;
+	GameObject laser;
+	GameObject collisionExplosion;
 	public float speed;
 	int ShotID;
+
 
 	void Update()
 	{

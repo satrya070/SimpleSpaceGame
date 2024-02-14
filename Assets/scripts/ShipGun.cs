@@ -12,12 +12,22 @@ public class ShipGun : MonoBehaviour
     RaycastHit hit;
     float range = 1000f;
 
+    [SerializeField]
+    AudioSource shotAudio;
+
+    AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            //
             if(Time.time > m_shootRateTimeStamp)
             {
                 shootRay();
@@ -28,6 +38,10 @@ public class ShipGun : MonoBehaviour
 
     void shootRay()
     {
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
         Ray ray = new Ray(transform.position, transform.forward * range);
 
         Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
