@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 11467940}
   - component: {fileID: 5461513438836294800}
   - component: {fileID: 8341007895782131523}
+  - component: {fileID: 1254616806776401626}
   m_Layer: 0
   m_Name: custom_asteroid_1
   m_TagString: Enemy
@@ -155,7 +156,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -175,6 +176,27 @@ MonoBehaviour:
   maxHealth: 25
   currentHealth: 0
   explosion: {fileID: 6296243866771450313, guid: f7cebc00acc0adb498e5c17d048bbfaf, type: 3}
+--- !u!135 &1254616806776401626
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130102}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.73
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &153142
 GameObject:
   m_ObjectHideFlags: 0
