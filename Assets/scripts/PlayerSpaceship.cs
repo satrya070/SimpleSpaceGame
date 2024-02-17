@@ -26,6 +26,10 @@ public class PlayerSpaceship : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
+
+        rb.freezeRotation = true;
+
+        //Invoke("EnableMouseInput", 10f);
     }
 
     // Update is called once per frame
@@ -37,6 +41,8 @@ public class PlayerSpaceship : MonoBehaviour
 
         mouseInputX = Input.GetAxis("Mouse X");
         mouseInputY = Input.GetAxis("Mouse Y");
+
+        //Debug.Log($"X: {mouseInputX}, Y: {mouseInputY}");
 
         // temp debug test for damage
         TestDamage();
@@ -52,6 +58,16 @@ public class PlayerSpaceship : MonoBehaviour
         rb.AddTorque(rb.transform.up * speedMultAngle * mouseInputX, ForceMode.VelocityChange);
 
         rb.AddTorque(rb.transform.forward * speedRollMultAngle * rollInput, ForceMode.VelocityChange);
+    }
+
+    void DisableMouseInput()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void EnableMouseInput()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void TestDamage()
