@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class AIShip : MonoBehaviour
 {
-    GameObject player;
+    public GameObject player;
     Rigidbody rb;
+    public float InRangeDist = 70f;
+    float maxSpeed = 100f;
 
 
     // Start is called before the first frame update
@@ -18,18 +20,56 @@ public class AIShip : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
+        if(player)
+        {
+            transform.LookAt(player.transform);
+        }
     }
 
     void FixedUpdate()
     {
-        if(GetPlayerDist() >= 7)
+        // if in_range false 
+        float PlayerDist = GetPlayerDist();
+        Debug.Log(rb.velocity.magnitude);
+        if(PlayerDist >= InRangeDist)
         {
-            Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
-            rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
+            if(PlayerDist >= (InRangeDist + 10))
+            {
+                Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
+                rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
+            }
+            else
+            {
+                //braking range
+                Debug.Log("brakeing!");
+                if(rb.velocity.magnitude > 3)
+                {
+                    rb.velocity = Vector3.Lerp(rb.velocity, -rb.velocity, Time.fixedDeltaTime / .2f);
+                }
+                else
+                {
+                    Debug.Log("below 3");
+                    rb.velocity = Vector3.zero;
+                }
+                //Debug.Log(rb.velocity.magnitude);
+            }
         }
-        else
+
+        ClampSpeed();
+    }
+
+    // strafe
+    // if shot at strafe 
+
+    // update_range
+    // dist < playetDist + 10
+        // set in_range false
+
+    void ClampSpeed()
+    {
+        if(rb.velocity.magnitude > 100f)
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
 

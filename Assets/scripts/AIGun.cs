@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class AIGun : MonoBehaviour
 {
-    GameObject player;
     AIShip ship;
 
     Rigidbody rb;
+    RaycastHit hit;
     private float ShootRate = 1;
     private float m_shootRateTimeStamp;
     private float LaserRange = 1000;
+    public GameObject m_shotPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        ship = transform.root.GetComponent<AIShip>(); //GetComponentInParent<AIShip>();
+        ship = transform.root.GetComponent<AIShip>();
     }
 
     // Update is called once per frame 
@@ -26,11 +27,11 @@ public class AIGun : MonoBehaviour
 
     void ShootPlayer()
     {   
-        if(ship.GetPlayerDist() < 7)
+        if(ship.GetPlayerDist() < (ship.InRangeDist + 20f))
         {
             if(Time.time > m_shootRateTimeStamp)
             {
-                Debug.Log($"Shot!: {Time.time}");
+                //Debug.Log($"Shot!: {Time.time}");
                 ShootRay();
                 m_shootRateTimeStamp = Time.time + ShootRate;
             }
@@ -39,7 +40,26 @@ public class AIGun : MonoBehaviour
 
     void ShootRay()
     {
-        Ray ray = new Ray(transform.position, transform.forward * LaserRange);
+        Vector3 PlayerDirection = (ship.player.transform.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
         Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
+
+        if (Physics.Raycast(ray, out hit, LaserRange))
+        {
+
+            Quaternion LaserRotation = Quaternion.Euler(PlayerDirection);// * LaserRange);
+            GameObject laser = GameObject.Instantiate(
+                m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
+            ) as GameObject;
+            laser.GetComponent<ShotBehavior>().setTarget(hit.point);
+            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser);
+            //Debug.Log($"Hit object: {hit.collider}!");
+        }
+        else
+        {
+            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
+            laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * LaserRange));
+            GameObject.Destroy(laser, 2f);
+        }
     }
 }
