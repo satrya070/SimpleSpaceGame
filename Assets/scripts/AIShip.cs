@@ -8,6 +8,7 @@ public class AIShip : MonoBehaviour
     Rigidbody rb;
     public float InRangeDist = 70f;
     float maxSpeed = 100f;
+    float rotationSpeed = 100f;
 
 
     // Start is called before the first frame update
@@ -20,14 +21,19 @@ public class AIShip : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
-        if(player)
-        {
-            transform.LookAt(player.transform);
-        }
     }
 
     void FixedUpdate()
     {
+        Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
+
+        // look processing
+        if(player)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, .01f * Time.deltaTime);
+        }
+
         // if in_range false 
         float PlayerDist = GetPlayerDist();
         Debug.Log(rb.velocity.magnitude);
@@ -35,7 +41,7 @@ public class AIShip : MonoBehaviour
         {
             if(PlayerDist >= (InRangeDist + 10))
             {
-                Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
+                //Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
                 rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
             }
             else
