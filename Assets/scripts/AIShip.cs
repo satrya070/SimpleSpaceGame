@@ -8,7 +8,7 @@ public class AIShip : MonoBehaviour
     Rigidbody rb;
     public float InRangeDist = 70f;
     float maxSpeed = 100f;
-    float rotationSpeed = 100f;
+    float rotationSpeed = 3f;
 
 
     // Start is called before the first frame update
@@ -31,7 +31,7 @@ public class AIShip : MonoBehaviour
         if(player)
         {
             Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, .01f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         // if in_range false 
