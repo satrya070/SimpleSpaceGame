@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIGun : MonoBehaviour
 {
-    AIShip ship;
+    AIShip shipOwner;
 
     Rigidbody rb;
     RaycastHit hit;
@@ -16,7 +16,7 @@ public class AIGun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ship = transform.root.GetComponent<AIShip>();
+        shipOwner = transform.root.GetComponent<AIShip>();
     }
 
     // Update is called once per frame 
@@ -27,7 +27,7 @@ public class AIGun : MonoBehaviour
 
     void ShootPlayer()
     {   
-        if(ship.GetPlayerDist() < (ship.InRangeDist + 20f))
+        if(shipOwner.GetPlayerDist() < (shipOwner.InRangeDist + 20f))
         {
             if(Time.time > m_shootRateTimeStamp)
             {
@@ -40,7 +40,7 @@ public class AIGun : MonoBehaviour
 
     void ShootRay()
     {
-        Vector3 PlayerDirection = (ship.player.transform.position - transform.position).normalized;
+        Vector3 PlayerDirection = (shipOwner.playerTrans.position - transform.position).normalized;
         Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
         Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class AIShip : MonoBehaviour
 {
     public GameObject player;
+    public Transform playerTrans;
+
     Rigidbody rb;
     public float InRangeDist = 70f;
     float maxSpeed = 100f;
@@ -15,17 +17,19 @@ public class AIShip : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        playerTrans = player.transform.Find("ShipTransform");
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame 
     void Update()
     {
+        //sherdog.com
     }
 
     void FixedUpdate()
     {
-        Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
+        Vector3 PlayerDirection = (playerTrans.position - transform.position).normalized;
 
         // look processing
         if(player)
@@ -41,7 +45,6 @@ public class AIShip : MonoBehaviour
         {
             if(PlayerDist >= (InRangeDist + 10))
             {
-                //Vector3 PlayerDirection = (player.transform.position - transform.position).normalized;
                 rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
             }
             else
@@ -81,6 +84,10 @@ public class AIShip : MonoBehaviour
 
     public float GetPlayerDist()
     {   
-        return Vector3.Distance(transform.position, player.transform.position);
+        // if(player)
+        // {
+        //     return Vector3.Distance(transform.position, player.transform.position);
+        // }
+        return Vector3.Distance(transform.position, playerTrans.position);
     }
 }

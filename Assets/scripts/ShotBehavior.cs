@@ -50,15 +50,15 @@ public class ShotBehavior: MonoBehaviour
 		laser = _laser;
     }
 
-	void explode()
-	{
-		if (collisionExplosion != null)
-		{
-			GameObject explosion = (GameObject)Instantiate(
-				collisionExplosion, transform.position, transform.rotation
-			);
-			Destroy(gameObject);
-			Destroy(explosion, 1f);
-		}
-	}
+	// void explode()
+	// {
+	// 	if (collisionExplosion != null)
+	// 	{
+	// 		GameObject explosion = (GameObject)Instantiate(
+	// 			collisionExplosion, transform.position, transform.rotation
+	// 		);
+	// 		Destroy(gameObject);
+	// 		Destroy(explosion, 1f);
+	// 	}
+	// }
 }
