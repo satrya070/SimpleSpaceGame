@@ -4,6 +4,7 @@ using System.Collections;
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
+	GameObject shooterObject;
 	GameObject hitObject;
 	GameObject laser;
 	GameObject collisionExplosion;
@@ -26,13 +27,14 @@ public class ShotBehavior: MonoBehaviour
 					if (ShotID != hitObject.gameObject.GetInstanceID())
 					{
                         ShotID = hitObject.gameObject.GetInstanceID();
-                        CombatHandler.ApplyDamage(hitObject, GameObject.Find("PlayerSpaceShip").GetComponent<Damage>());
+                        // CombatHandler.ApplyDamage(hitObject, GameObject.Find("PlayerSpaceShip").GetComponent<Damage>());
+						CombatHandler.ApplyDamage(hitObject, shooterObject.GetComponent<Damage>());
 						GameObject.Destroy(laser);
 					}
 				}
 
 				// TODO still needed? (laser explosion, if not delete)
-				explode();
+				//explode();
 				return;
 			}
 			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
@@ -44,8 +46,9 @@ public class ShotBehavior: MonoBehaviour
 		m_target = target;
 	}
 
-	public void setHitComponents(GameObject _hitObject, GameObject _laser)
+	public void setHitComponents(GameObject _hitObject, GameObject _laser, GameObject _shooterObject)
 	{
+		shooterObject = _shooterObject;
 		hitObject = _hitObject;
 		laser = _laser;
     }

@@ -40,7 +40,7 @@ public class AIShip : MonoBehaviour
 
         // if in_range false 
         float PlayerDist = GetPlayerDist();
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         if(PlayerDist >= InRangeDist)
         {
             if(PlayerDist >= (InRangeDist + 10))
@@ -50,17 +50,16 @@ public class AIShip : MonoBehaviour
             else
             {
                 //braking range
-                Debug.Log("brakeing!");
+                // Debug.Log("brakeing!");
                 if(rb.velocity.magnitude > 3)
                 {
                     rb.velocity = Vector3.Lerp(rb.velocity, -rb.velocity, Time.fixedDeltaTime / .2f);
                 }
                 else
                 {
-                    Debug.Log("below 3");
+                    //Debug.Log("below 3");
                     rb.velocity = Vector3.zero;
                 }
-                //Debug.Log(rb.velocity.magnitude);
             }
         }
 

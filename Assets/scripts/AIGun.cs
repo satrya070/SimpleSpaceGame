@@ -8,7 +8,7 @@ public class AIGun : MonoBehaviour
 
     Rigidbody rb;
     RaycastHit hit;
-    private float ShootRate = 1;
+    private float ShootRate = 3;
     private float m_shootRateTimeStamp;
     private float LaserRange = 1000;
     public GameObject m_shotPrefab;
@@ -46,14 +46,13 @@ public class AIGun : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, LaserRange))
         {
-
             Quaternion LaserRotation = Quaternion.Euler(PlayerDirection);// * LaserRange);
             GameObject laser = GameObject.Instantiate(
                 m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
             ) as GameObject;
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
-            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser);
-            //Debug.Log($"Hit object: {hit.collider}!");
+            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, shipOwner.transform.gameObject);
+            Debug.Log($"Hit object: {hit.collider.name}!");
         }
         else
         {

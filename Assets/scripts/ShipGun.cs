@@ -46,7 +46,7 @@ public class ShipGun : MonoBehaviour
         {
             GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
-            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser);
+            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, transform.root.gameObject);
 
             //Debug.Log($"Hit object: {hit.collider}!");
         }
