@@ -9,41 +9,21 @@ public class ShotBehavior: MonoBehaviour
 	GameObject laser;
 	GameObject collisionExplosion;
 	public float speed;
-	int ShotID;
+
+	private bool HasHit;
+	private float EndExistTime;
+	private float ExistTime = 2f;
 
 
 	void Update()
 	{
-		float step = speed * Time.deltaTime;
-
-		if (m_target != null)
-		{
-			if (transform.position == m_target)
-			{
-				// if hit an object with health
-				if (hitObject != null && hitObject.GetComponent<Health>() != null)
-				{	
-					// make sure that during update applyDamage prt 1 unique shot
-					if (ShotID != hitObject.gameObject.GetInstanceID())
-					{
-                        ShotID = hitObject.gameObject.GetInstanceID();
-                        // CombatHandler.ApplyDamage(hitObject, GameObject.Find("PlayerSpaceShip").GetComponent<Damage>());
-						CombatHandler.ApplyDamage(hitObject, shooterObject.GetComponent<Damage>());
-						GameObject.Destroy(laser);
-					}
-				}
-
-				// TODO still needed? (laser explosion, if not delete)
-				//explode();
-				return;
-			}
-			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
-		}
+		MoveLaser();
 	}
 
 	public void setTarget(Vector3 target)
 	{
 		m_target = target;
+		EndExistTime = Time.time + ExistTime;
 	}
 
 	public void setHitComponents(GameObject _hitObject, GameObject _laser, GameObject _shooterObject)
@@ -52,6 +32,35 @@ public class ShotBehavior: MonoBehaviour
 		hitObject = _hitObject;
 		laser = _laser;
     }
+
+	void OnCollisionEnter(Collision other)
+    {
+		GameObject hitObject = other.gameObject;
+
+		// if hittable and only first registered collision
+		if(hitObject.GetComponent<Health>() != null & !HasHit)
+		{
+			HasHit = true;
+			CombatHandler.ApplyDamage(hitObject, shooterObject.GetComponent<Damage>());
+			GameObject.Destroy(laser);
+			Debug.Log("Has a hit!");
+		}
+	}
+
+	void MoveLaser()
+	{
+		// make it travel max existtime
+		if(Time.time > EndExistTime)
+		{
+			Destroy(gameObject);
+		}
+
+		float step = speed * Time.deltaTime;
+		if (m_target != null)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
+		}
+	}
 
 	// void explode()
 	// {

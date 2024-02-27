@@ -44,21 +44,23 @@ public class AIGun : MonoBehaviour
         Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
         Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
 
+        // raycast from AI always hits
         if (Physics.Raycast(ray, out hit, LaserRange))
         {
             Quaternion LaserRotation = Quaternion.Euler(PlayerDirection);// * LaserRange);
             GameObject laser = GameObject.Instantiate(
                 m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
             ) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(hit.point);
+            laser.GetComponent<ShotBehavior>().setTarget(hit.point * 1f);
             laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, shipOwner.transform.gameObject);
-            Debug.Log($"Hit object: {hit.collider.name}!");
+            //Debug.Log($"Hit object: {hit.collider.name}!");
         }
-        else
-        {
-            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * LaserRange));
-            GameObject.Destroy(laser, 2f);
-        }
+        // else
+        // {
+        //     Debug.Log("MISSED");
+        //     GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
+        //     laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * LaserRange));
+        //     GameObject.Destroy(laser, 2f);
+        // }
     }
 }

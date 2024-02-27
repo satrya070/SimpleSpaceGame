@@ -28,7 +28,6 @@ public class PlayerSpaceship : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         rb.freezeRotation = true;
-
         //Invoke("EnableMouseInput", 10f);
     }
 
@@ -80,4 +79,5 @@ public class PlayerSpaceship : MonoBehaviour
             CombatHandler.ApplyDamage(Player, TDamage);
         }
     }
+
 }
