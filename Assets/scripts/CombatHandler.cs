@@ -6,6 +6,7 @@ public class CombatHandler : MonoBehaviour
 {
     public static void ApplyDamage(GameObject target, Damage damage)
     {
+        Debug.Log($"{damage.DamagePoints} taken!");
         Health health = target.GetComponent<Health>();
         if (health != null)
         {
