@@ -17,6 +17,7 @@ public class AIShip : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        // get the actual set ship center position.
         playerTrans = player.transform.Find("ShipTransform");
         rb = GetComponent<Rigidbody>();
     }
@@ -24,14 +25,13 @@ public class AIShip : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
-        //sherdog.com
     }
 
     void FixedUpdate()
     {
         Vector3 PlayerDirection = (playerTrans.position - transform.position).normalized;
 
-        // look processing
+        // look at player logic
         if(player)
         {
             Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
@@ -58,6 +58,7 @@ public class AIShip : MonoBehaviour
                 else
                 {
                     //Debug.Log("below 3");
+                    // TODO only zero forward/backward velocity(not angular for lookat?)
                     rb.velocity = Vector3.zero;
                 }
             }
@@ -66,8 +67,7 @@ public class AIShip : MonoBehaviour
         ClampSpeed();
     }
 
-    // strafe
-    // if shot at strafe 
+    // TODO strafe/move when shot
 
     // update_range
     // dist < playetDist + 10

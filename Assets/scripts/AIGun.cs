@@ -44,6 +44,15 @@ public class AIGun : MonoBehaviour
         Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
         Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
 
+        GameObject laser = GameObject.Instantiate(
+            m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
+        ) as GameObject;
+        laser.GetComponent<ShotBehavior>().setTargetComponents(
+            //transform.position + (transform.forward * range),
+            transform.position + (PlayerDirection * LaserRange),
+            shipOwner.GetComponent<Damage>()
+        );
+
         // raycast from AI always hits
         // if (Physics.Raycast(ray, out hit, LaserRange))
         // {
