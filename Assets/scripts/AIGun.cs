@@ -22,7 +22,10 @@ public class AIGun : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
-        ShootPlayer();
+        if(shipOwner.player)
+        {
+            ShootPlayer();
+        }
     }
 
     void ShootPlayer()
@@ -41,8 +44,9 @@ public class AIGun : MonoBehaviour
     void ShootRay()
     {
         Vector3 PlayerDirection = (shipOwner.playerTrans.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
-        Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
+        //debug ray
+        //Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
+        //Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
 
         GameObject laser = GameObject.Instantiate(
             m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
@@ -52,18 +56,5 @@ public class AIGun : MonoBehaviour
             transform.position + (PlayerDirection * LaserRange),
             shipOwner.GetComponent<Damage>()
         );
-
-        // raycast from AI always hits
-        // if (Physics.Raycast(ray, out hit, LaserRange))
-        // {
-        //     Quaternion LaserRotation = Quaternion.Euler(PlayerDirection);// * LaserRange);
-        //     GameObject laser = GameObject.Instantiate(
-        //         m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
-        //     ) as GameObject;
-        //     //Debug.Log($"{hit.point} - {hit.point * 2f}");
-        //     laser.GetComponent<ShotBehavior>().setTarget(hit.point * 1f);
-        //     laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, shipOwner.transform.gameObject);
-        // }
-
     }
 }

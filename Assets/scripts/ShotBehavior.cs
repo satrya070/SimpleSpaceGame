@@ -48,7 +48,7 @@ public class ShotBehavior: MonoBehaviour
 			//Damage damageTobe = shooterObject.GetComponent<Damage>();
 			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{damageTobe.DamagePoints}");
 			CombatHandler.ApplyDamage(hitObject, DamageObj);
-			GameObject.Destroy(laser);
+			Destroy(gameObject);
 			//Debug.Log("Has a hit!");
 		}
 	}

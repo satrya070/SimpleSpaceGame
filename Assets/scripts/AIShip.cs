@@ -29,42 +29,45 @@ public class AIShip : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 PlayerDirection = (playerTrans.position - transform.position).normalized;
-
-        // look at player logic
         if(player)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+            Vector3 PlayerDirection = (playerTrans.position - transform.position).normalized;
 
-        // if in_range false 
-        float PlayerDist = GetPlayerDist();
-        //Debug.Log(rb.velocity.magnitude);
-        if(PlayerDist >= InRangeDist)
-        {
-            if(PlayerDist >= (InRangeDist + 10))
+            // look at player logic
+            if(player)
             {
-                rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
+                Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
-            else
+
+            // if in_range false 
+            float PlayerDist = GetPlayerDist();
+            //Debug.Log(rb.velocity.magnitude);
+            if(PlayerDist >= InRangeDist)
             {
-                //braking range
-                // Debug.Log("brakeing!");
-                if(rb.velocity.magnitude > 3)
+                if(PlayerDist >= (InRangeDist + 10))
                 {
-                    rb.velocity = Vector3.Lerp(rb.velocity, -rb.velocity, Time.fixedDeltaTime / .2f);
+                    rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
                 }
                 else
                 {
-                    //Debug.Log("below 3");
-                    // TODO only zero forward/backward velocity(not angular for lookat?)
-                    rb.velocity = Vector3.zero;
+                    //braking range
+                    // Debug.Log("brakeing!");
+                    if(rb.velocity.magnitude > 3)
+                    {
+                        rb.velocity = Vector3.Lerp(rb.velocity, -rb.velocity, Time.fixedDeltaTime / .2f);
+                    }
+                    else
+                    {
+                        //Debug.Log("below 3");
+                        // TODO only zero forward/backward velocity(not angular for lookat?)
+                        rb.velocity = Vector3.zero;
+                    }
                 }
             }
-        }
 
-        ClampSpeed();
+            ClampSpeed();
+        }
     }
 
     // TODO strafe/move when shot
