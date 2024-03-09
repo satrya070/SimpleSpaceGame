@@ -37,6 +37,15 @@ public class Health : MonoBehaviour
             GameObject explode = Instantiate(explosion, transform.position, transform.rotation);//.parent.transform);
             Destroy(explode, 1f);
         }
-        Destroy(gameObject);
+
+        if(gameObject.tag == "Player")
+        {
+            Transform shipTrans = gameObject.transform.Find("ship");
+            Destroy(shipTrans.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

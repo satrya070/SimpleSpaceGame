@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class bounds : MonoBehaviour
 {   
@@ -10,11 +11,18 @@ public class bounds : MonoBehaviour
     [SerializeField]
     PlayerSpaceship player;
 
-    private bool isRotating = false;
+    [SerializeField]
+    private TMP_Text OutboundsText;
+
+    [SerializeField]
+    Transform LevelCenter;
+
+    private bool TurningBack;
 
     // Start is called before the first frame update
     void Start()
     {   
+        OutboundsText.enabled = false;
     }
 
     // Update is called once per frame
@@ -23,22 +31,31 @@ public class bounds : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        Debug.Log("going out!");
+        if(other.gameObject.transform.root.tag != "Player")
+        {
+            Destroy(other.gameObject);
+            return;
+        }
 
-        // isRotating = true;
-        // Transform otherTrans = other.gameObject.transform.root;
+        Vector3 LevelDirection = (LevelCenter.position - other.gameObject.transform.root.position);
 
-        // Vector3 targetAngles = otherTrans.eulerAngles + 180f * Vector3.right;
-        // otherTrans.eulerAngles = targetAngles;
-        // Debug.Log($"{otherTrans.eulerAngles}: {targetAngles}");
+        Transform PlayerTrans = other.gameObject.transform.root;
+        PlayerTrans.position = PlayerTrans.position + (100 * LevelDirection.normalized);
+        //PlayerTrans.root.Rotate(LevelDirection);
+        PlayerTrans.root.rotation = Quaternion.Euler(LevelDirection);
 
-        Vector3 CenterDirection = (other.transform.position - centerCapsule.transform.position).normalized;
+        StartCoroutine(DisplayOutbounds());
         
-
-        other.GetComponent<Rigidbody>().AddForce(CenterDirection * 10, ForceMode.VelocityChange);
-        //other.GetComponent<Rigidbody>().AddForce(CenterDirection.right * 10, ForceMode.VelocityChange);
     }
 
+    IEnumerator DisplayOutbounds()
+    {
+        OutboundsText.enabled = true;
+
+        yield return new WaitForSeconds(3f);
+
+        OutboundsText.enabled = false;
+    }
 }

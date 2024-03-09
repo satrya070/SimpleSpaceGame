@@ -13,6 +13,7 @@ public class ShotBehavior: MonoBehaviour
 	private bool HasHit;
 	private float EndExistTime;
 	private float ExistTime = 2f;
+	Damage DamageObj;
 
 
 	void Update()
@@ -20,30 +21,35 @@ public class ShotBehavior: MonoBehaviour
 		MoveLaser();
 	}
 
-	public void setTarget(Vector3 target)
+	public void setTargetComponents(Vector3 target, Damage _DamageObj)
 	{
 		m_target = target;
 		EndExistTime = Time.time + ExistTime;
+		DamageObj = _DamageObj;
 	}
 
 	public void setHitComponents(GameObject _hitObject, GameObject _laser, GameObject _shooterObject)
 	{
-		shooterObject = _shooterObject;
 		hitObject = _hitObject;
 		laser = _laser;
+		shooterObject = _shooterObject;
+		//Debug.Log($"{hitObject.name} <- {shooterObject.name}");
     }
 
 	void OnCollisionEnter(Collision other)
     {
+		Debug.Log($"hit {other.gameObject.name}");
 		GameObject hitObject = other.gameObject;
 
 		// if hittable and only first registered collision
 		if(hitObject.GetComponent<Health>() != null & !HasHit)
 		{
 			HasHit = true;
-			CombatHandler.ApplyDamage(hitObject, shooterObject.GetComponent<Damage>());
-			GameObject.Destroy(laser);
-			Debug.Log("Has a hit!");
+			//Damage damageTobe = shooterObject.GetComponent<Damage>();
+			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{damageTobe.DamagePoints}");
+			CombatHandler.ApplyDamage(hitObject, DamageObj);
+			Destroy(gameObject);
+			//Debug.Log("Has a hit!");
 		}
 	}
 

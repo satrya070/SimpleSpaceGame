@@ -22,7 +22,10 @@ public class AIGun : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
-        ShootPlayer();
+        if(shipOwner.player)
+        {
+            ShootPlayer();
+        }
     }
 
     void ShootPlayer()
@@ -41,26 +44,17 @@ public class AIGun : MonoBehaviour
     void ShootRay()
     {
         Vector3 PlayerDirection = (shipOwner.playerTrans.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
-        Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
+        //debug ray
+        //Ray ray = new Ray(transform.position, PlayerDirection * LaserRange);
+        //Debug.DrawRay(transform.position, ray.direction * LaserRange, Color.green, 10f);
 
-        // raycast from AI always hits
-        if (Physics.Raycast(ray, out hit, LaserRange))
-        {
-            Quaternion LaserRotation = Quaternion.Euler(PlayerDirection);// * LaserRange);
-            GameObject laser = GameObject.Instantiate(
-                m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
-            ) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(hit.point * 1f);
-            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, shipOwner.transform.gameObject);
-            //Debug.Log($"Hit object: {hit.collider.name}!");
-        }
-        // else
-        // {
-        //     Debug.Log("MISSED");
-        //     GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-        //     laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * LaserRange));
-        //     GameObject.Destroy(laser, 2f);
-        // }
+        GameObject laser = GameObject.Instantiate(
+            m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
+        ) as GameObject;
+        laser.GetComponent<ShotBehavior>().setTargetComponents(
+            //transform.position + (transform.forward * range),
+            transform.position + (PlayerDirection * LaserRange),
+            shipOwner.GetComponent<Damage>()
+        );
     }
 }
