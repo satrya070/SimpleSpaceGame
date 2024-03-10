@@ -39,6 +39,7 @@ public class ShipGun : MonoBehaviour
     {
         if (audioSourceGun)
         {
+            Debug.Log("play sound!");
             audioSourceGun.Play();
         }
         Ray ray = new Ray(transform.position, transform.forward * range);
