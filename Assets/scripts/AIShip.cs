@@ -8,7 +8,7 @@ public class AIShip : MonoBehaviour
     public Transform playerTrans;
 
     Rigidbody rb;
-    public float InRangeDist = 70f;
+    public float MinRangeDist = 70f;
     float maxSpeed = 100f;
     float rotationSpeed = 3f;
 
@@ -17,7 +17,6 @@ public class AIShip : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        // get the actual set ship center position.
         playerTrans = player.transform.Find("ShipTransform");
         rb = GetComponent<Rigidbody>();
     }
@@ -42,10 +41,9 @@ public class AIShip : MonoBehaviour
 
             // if in_range false 
             float PlayerDist = GetPlayerDist();
-            //Debug.Log(rb.velocity.magnitude);
-            if(PlayerDist >= InRangeDist)
+            if(PlayerDist >= MinRangeDist)
             {
-                if(PlayerDist >= (InRangeDist + 10))
+                if(PlayerDist >= (MinRangeDist + 10))
                 {
                     rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
                 }
@@ -72,9 +70,6 @@ public class AIShip : MonoBehaviour
 
     // TODO strafe/move when shot
 
-    // update_range
-    // dist < playetDist + 10
-        // set in_range false
 
     void ClampSpeed()
     {
@@ -86,10 +81,6 @@ public class AIShip : MonoBehaviour
 
     public float GetPlayerDist()
     {   
-        // if(player)
-        // {
-        //     return Vector3.Distance(transform.position, player.transform.position);
-        // }
         return Vector3.Distance(transform.position, playerTrans.position);
     }
 }
