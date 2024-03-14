@@ -8,9 +8,11 @@ public class AIShip : MonoBehaviour
     public Transform playerTrans;
 
     Rigidbody rb;
-    public float MinRangeDist = 70f;
+    public float MinRangeDist;
     float maxSpeed = 100f;
     float rotationSpeed = 3f;
+
+    float BrakeMark = 50f;
 
 
     // Start is called before the first frame update
@@ -36,30 +38,26 @@ public class AIShip : MonoBehaviour
             if(player)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(PlayerDirection);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
 
             // if in_range false 
             float PlayerDist = GetPlayerDist();
             if(PlayerDist >= MinRangeDist)
             {
-                if(PlayerDist >= (MinRangeDist + 10))
+
+                Debug.Log(rb.velocity.magnitude);
+                if(PlayerDist >= (MinRangeDist + BrakeMark))
                 {
+                    //Debug.Log(PlayerDist);
                     rb.AddForce(PlayerDirection * 1, ForceMode.VelocityChange);
                 }
                 else
                 {
-                    //braking range
-                    // Debug.Log("brakeing!");
-                    if(rb.velocity.magnitude > 3)
+                    if(rb.velocity.magnitude > 10f)
                     {
-                        rb.velocity = Vector3.Lerp(rb.velocity, -rb.velocity, Time.fixedDeltaTime / .2f);
-                    }
-                    else
-                    {
-                        //Debug.Log("below 3");
-                        // TODO only zero forward/backward velocity(not angular for lookat?)
-                        rb.velocity = Vector3.zero;
+                        float CounterForce = (rb.velocity.magnitude / 100f) * 4.5f;
+                        rb.AddForce(PlayerDirection * -CounterForce, ForceMode.VelocityChange);
                     }
                 }
             }
