@@ -30,7 +30,7 @@ public class AIGun : MonoBehaviour
 
     void ShootPlayer()
     {   
-        if(shipOwner.GetPlayerDist() < (shipOwner.MinRangeDist + 20f))
+        if(shipOwner.GetPlayerDist() < (shipOwner.MinRangeDist + 50f))
         {
             if(Time.time > m_shootRateTimeStamp)
             {
