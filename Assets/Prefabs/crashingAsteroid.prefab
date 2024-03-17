@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 3567215686853027884}
   - component: {fileID: 5957440449360474200}
   - component: {fileID: 3826389417821389813}
+  - component: {fileID: 4310353275564623020}
   m_Layer: 0
   m_Name: crashingAsteroid
   m_TagString: Enemy
@@ -210,6 +211,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crashPoint: {fileID: 0}
   crashSpeed: 100
+  explosion: {fileID: 6296243866771450313, guid: f7cebc00acc0adb498e5c17d048bbfaf, type: 3}
+--- !u!114 &4310353275564623020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2549055248097816127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41069d059a97f4d45ba367869215f733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamagePoints: 5
 --- !u!1 &2597123071923533732
 GameObject:
   m_ObjectHideFlags: 0
