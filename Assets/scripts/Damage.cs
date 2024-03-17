@@ -6,9 +6,4 @@ public class Damage : MonoBehaviour
 {
     //[SerializeField]
     public int DamagePoints;
-
-    //public Damage(int damagePoints)
-    //{
-    //    DamagePoints = damagePoints;
-    //}
 }

@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
-	GameObject shooterObject;
-	GameObject hitObject;
-	GameObject laser;
-	GameObject collisionExplosion;
+	//GameObject collisionExplosion;
 	public float speed;
+	string HitterTag;
 
 	private bool HasHit;
 	private float EndExistTime;
@@ -21,35 +20,33 @@ public class ShotBehavior: MonoBehaviour
 		MoveLaser();
 	}
 
-	public void setTargetComponents(Vector3 target, Damage _DamageObj)
+	public void setTargetComponents(string _HitterTag, Vector3 target, Damage _DamageObj)
 	{
+		HitterTag = _HitterTag;
 		m_target = target;
 		EndExistTime = Time.time + ExistTime;
 		DamageObj = _DamageObj;
 	}
-
-	public void setHitComponents(GameObject _hitObject, GameObject _laser, GameObject _shooterObject)
-	{
-		hitObject = _hitObject;
-		laser = _laser;
-		shooterObject = _shooterObject;
-		//Debug.Log($"{hitObject.name} <- {shooterObject.name}");
-    }
 
 	void OnCollisionEnter(Collision other)
     {
 		Debug.Log($"hit {other.gameObject.name}");
 		GameObject hitObject = other.gameObject;
 
+		// check for events where damage should be different from default
+		if(Globals.specialBehaviour.ContainsKey(Tuple.Create(HitterTag, other.gameObject.tag)))
+		{
+			DamageObj.DamagePoints = Globals.specialBehaviour[Tuple.Create(HitterTag, other.gameObject.tag)];
+		}
+
 		// if hittable and only first registered collision
 		if(hitObject.GetComponent<Health>() != null & !HasHit)
 		{
+			Debug.Log(HitterTag);
 			HasHit = true;
-			//Damage damageTobe = shooterObject.GetComponent<Damage>();
-			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{damageTobe.DamagePoints}");
+			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{shooterObject.GetComponent<Damage>().DamagePoints}");
 			CombatHandler.ApplyDamage(hitObject, DamageObj);
 			Destroy(gameObject);
-			//Debug.Log("Has a hit!");
 		}
 	}
 

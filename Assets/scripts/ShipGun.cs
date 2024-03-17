@@ -45,26 +45,12 @@ public class ShipGun : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward * range);
 
         Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
-        // if (Physics.Raycast(ray, out hit, range))
-        // {
-        //     GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-        //     laser.GetComponent<ShotBehavior>().setTarget(hit.point);
-        //     laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, transform.root.gameObject);
-        //     //Debug.Log(transform.root.gameObject.name);
-        //     //Debug.Log($"Hit object: {hit.collider}!");
-        // }
-        // else
-        // {
-        //     GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-        //     laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * range));
-        //     GameObject.Destroy(laser, 2f);
-        // }
 
         GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
         laser.GetComponent<ShotBehavior>().setTargetComponents(
+            shipOwner.gameObject.tag,
             transform.position + (transform.forward * range),
             shipOwner.GetComponent<Damage>()
         );
-        //laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser, transform.root.gameObject);
     }
 }

@@ -52,7 +52,7 @@ public class AIGun : MonoBehaviour
             m_shotPrefab, transform.position, Quaternion.LookRotation(PlayerDirection)
         ) as GameObject;
         laser.GetComponent<ShotBehavior>().setTargetComponents(
-            //transform.position + (transform.forward * range),
+            shipOwner.gameObject.tag,
             transform.position + (PlayerDirection * LaserRange),
             shipOwner.GetComponent<Damage>()
         );

@@ -24,10 +24,10 @@ public class CrashingMeteor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 moveDirection = (crashPoint.position - transform.position).normalized;
         if(crashPoint)
         {
             //Debug.Log("Moving rock!");
+            Vector3 moveDirection = (crashPoint.position - transform.position).normalized;
             rb.AddForce(moveDirection * crashSpeed);
         }
     }
