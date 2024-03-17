@@ -12,6 +12,8 @@ public class meteorManager : MonoBehaviour
 
     public Transform[] spawnPoints;
 
+    int MeteorsSpawned = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,14 +21,31 @@ public class meteorManager : MonoBehaviour
         spawnPoints = Impactpoints.GetComponentsInChildren<Transform>();
         spawnPoints = spawnPoints.Skip(1).ToArray();  // exclude transform being searched in transform
 
-        Vector3 spawnPosition = Random.insideUnitSphere;
-        GameObject asteroid = Instantiate(asteroidPrefab, spawnPosition * spawnRadius, transform.rotation);
-        CrashingMeteor CrashComp = asteroid.GetComponent<CrashingMeteor>();
-        CrashComp.crashPoint = spawnPoints[0];
+        StartCoroutine(RandomMeteorSpawner());
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    IEnumerator RandomMeteorSpawner()
+    {
+        while(MeteorsSpawned < 5)
+        {
+            yield return new WaitForSeconds(Random.Range(1f, 2f));
+
+            SpawnMeteor();
+            MeteorsSpawned += 1;
+        }
+    }
+
+    void SpawnMeteor()
+    {
+        Vector3 spawnPosition = Random.insideUnitSphere;
+        GameObject asteroid = Instantiate(asteroidPrefab, spawnPosition * spawnRadius, transform.rotation);
+        CrashingMeteor CrashComp = asteroid.GetComponent<CrashingMeteor>();
+        int CrashPointPick = Random.Range(0, 3);
+        CrashComp.crashPoint = spawnPoints[CrashPointPick];
     }
 }
