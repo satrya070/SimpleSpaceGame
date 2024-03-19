@@ -43,7 +43,8 @@ public class meteorManager : MonoBehaviour
     void SpawnMeteor()
     {
         Vector3 spawnPosition = Random.insideUnitSphere;
-        GameObject asteroid = Instantiate(asteroidPrefab, spawnPosition * spawnRadius, transform.rotation);
+        Debug.Log(spawnPosition);
+        GameObject asteroid = Instantiate(asteroidPrefab, transform.position + (spawnPosition * spawnRadius), transform.rotation);
         CrashingMeteor CrashComp = asteroid.GetComponent<CrashingMeteor>();
         int CrashPointPick = Random.Range(0, 3);
         CrashComp.crashPoint = spawnPoints[CrashPointPick];
