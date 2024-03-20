@@ -8,10 +8,7 @@ public class bounds : MonoBehaviour
     [SerializeField]
     GameObject centerCapsule;
 
-    [SerializeField]
-    PlayerSpaceship player;
-
-    [SerializeField]
+    //[SerializeField]
     private TMP_Text OutboundsText;
 
     [SerializeField]
@@ -22,7 +19,12 @@ public class bounds : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        GameObject player = GameObject.FindWithTag("Player");
+
+        //TMP_Text[] children = player.GetComponentsInChildren<TMP_Text>();
+        OutboundsText =  player.GetComponentsInChildren<TMP_Text>()[0];
         OutboundsText.enabled = false;
+
     }
 
     // Update is called once per frame
