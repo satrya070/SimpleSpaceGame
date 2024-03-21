@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
@@ -24,7 +25,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private void Start() {
-        PlayMusic("LevelSound");
+        //PlayMusic("LevelSound");
     }
 
     public void PlayMusic(string name) {

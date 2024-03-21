@@ -38,10 +38,11 @@ public class ShipGun : MonoBehaviour
     void shootRay()
     {
         // handle in audio manager
-        if (audioSourceGun)
-        {
-            audioSourceGun.Play();
-        }
+        // if (audioSourceGun)
+        // {
+        //     audioSourceGun.Play();
+        // }
+        AudioManager.Instance.PlaySfx("LaserGun");
         Ray ray = new Ray(transform.position, transform.forward * range);
 
         Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
