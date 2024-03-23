@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class RaceManager : MonoBehaviour
 {   
@@ -9,7 +10,8 @@ public class RaceManager : MonoBehaviour
     [SerializeField]
     public List<GameObject> racePoints;
 
-    public float Countdown = 0f;
+    [SerializeField] TMP_Text timerText;
+    public float Countdown = 60f;
     public bool OnCount = false;
 
     // Start is called before the first frame update
@@ -28,8 +30,11 @@ public class RaceManager : MonoBehaviour
     {
         if(OnCount)
         {
-            Countdown += Time.deltaTime;
-            Debug.Log(Countdown);
+            Countdown -= Time.deltaTime;
+            //Debug.Log(Countdown);
+            int minutes = Mathf.FloorToInt(Countdown / 60);
+            int seconds = Mathf.FloorToInt(Countdown % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 }
