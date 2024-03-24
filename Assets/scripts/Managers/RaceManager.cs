@@ -10,7 +10,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField]
     public List<GameObject> racePoints;
 
-    [SerializeField] TMP_Text timerText;
+    [SerializeField] public TMP_Text timerText;
     public float Countdown = 60f;
     public bool OnCount = false;
 

@@ -18,6 +18,7 @@ public class RacePoint : MonoBehaviour
             if (RaceManager.Instance.OnCount == false)
             {
                 RaceManager.Instance.OnCount = true;
+                RaceManager.Instance.timerText.gameObject.SetActive(true);
                 Debug.Log($"Count starting now!: {RaceManager.Instance.Countdown}");
             }
 
