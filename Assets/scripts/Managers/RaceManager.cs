@@ -13,6 +13,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] public TMP_Text timerText;
     public float Countdown = 60f;
     public bool OnCount = false;
+    bool RaceFinished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class RaceManager : MonoBehaviour
     void Update()
     {
         CountdownRace();
+        RaceResult();
     }
 
     void CountdownRace()
@@ -31,10 +33,26 @@ public class RaceManager : MonoBehaviour
         if(OnCount)
         {
             Countdown -= Time.deltaTime;
-            //Debug.Log(Countdown);
             int minutes = Mathf.FloorToInt(Countdown / 60);
             int seconds = Mathf.FloorToInt(Countdown % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+    }
+
+    void RaceResult()
+    {
+        if(!RaceFinished)
+        {
+            if(racePoints.Count == 0 & Countdown >= 0f)
+            {
+                Debug.Log("Succesfully completed the mission!");
+                RaceFinished = true;
+            }
+            else if(racePoints.Count > 0f & Countdown < 0f)
+            {
+                Debug.Log("Failed the mission!");
+                RaceFinished = true;
+            }
         }
     }
 }
