@@ -47,11 +47,13 @@ public class RaceManager : MonoBehaviour
             {
                 Debug.Log("Succesfully completed the mission!");
                 RaceFinished = true;
+                timerText.gameObject.SetActive(false);
             }
             else if(racePoints.Count > 0f & Countdown < 0f)
             {
                 Debug.Log("Failed the mission!");
                 RaceFinished = true;
+                timerText.gameObject.SetActive(false);
             }
         }
     }
