@@ -18,9 +18,7 @@ public class HealthBar : MonoBehaviour
 
         if(gameObject.transform.root.gameObject.tag != "Player")
         {
-            Debug.Log($"{gameObject.transform.root.transform.gameObject.name} is searhcing for player camera...");
             MainCameraTarget = GameObject.FindWithTag("MainCamera");
-            Debug.Log(MainCameraTarget.transform.position);
         }
     }
 
@@ -30,7 +28,6 @@ public class HealthBar : MonoBehaviour
 
         if(MainCameraTarget)
         {
-            //Debug.Log(transform.parent.transform.name);
             transform.parent.transform.LookAt(MainCameraTarget.transform.position);
         }
     }
