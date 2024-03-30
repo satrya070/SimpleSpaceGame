@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     float ReloadDelay = 5f;
     
     public static Dictionary<Tuple<string, string>, float> specialHits = new Dictionary<Tuple<string, string>, float>();
+    public static bool LevelStarted;
 
     // Start is called before the first frame update
     void Start()
