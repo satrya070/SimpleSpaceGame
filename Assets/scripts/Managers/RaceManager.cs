@@ -13,7 +13,8 @@ public class RaceManager : MonoBehaviour
     [SerializeField] public TMP_Text timerText;
     public float Countdown = 60f;
     public bool OnCount = false;
-    bool RaceFinished = false;
+    public bool RaceFinished = false;
+    public bool RacePassed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,7 @@ public class RaceManager : MonoBehaviour
             if(racePoints.Count == 0 & Countdown >= 0f)
             {
                 Debug.Log("Succesfully completed the mission!");
+                RacePassed = true;
                 RaceFinished = true;
                 timerText.gameObject.SetActive(false);
             }

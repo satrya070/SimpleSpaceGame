@@ -11,7 +11,6 @@ public class Window : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         InfoCanvas = transform.parent.parent.gameObject;
-        Debug.Log(InfoCanvas);
     }
 
     public void CloseWindow()

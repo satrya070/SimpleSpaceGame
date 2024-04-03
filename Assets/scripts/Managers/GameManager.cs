@@ -8,10 +8,35 @@ public class GameManager : MonoBehaviour
 {
     Health playerHealth;
     bool restartingScene;
-    float ReloadDelay = 5f;
+    float LevelReloadTime = 5f;
+
+    RaceManager raceManager;
+    meteorManager meteorManager;
     
     public static Dictionary<Tuple<string, string>, float> specialHits = new Dictionary<Tuple<string, string>, float>();
     public static bool LevelStarted;
+
+    public static bool LevelEnded;
+    public static bool LevelPassed;
+
+    public Dictionary<int, Action> LevelEndConditions = new Dictionary<int, Action>();
+
+    void Awake() {
+        GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
+        raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
+
+        GameObject meteorManagerObject = GameObject.FindWithTag("MeteorManager");
+        meteorManager = meteorManagerObject ? meteorManagerObject.GetComponent<meteorManager>() : null;
+
+        // specific situations where damage should be different
+        Globals.specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
+
+        // populate end win-lose conditions
+        LevelEndConditions.Add(1, MonitorRace);
+        LevelEndConditions.Add(2, MonitorMeteors);
+        // TODO add lv3 AI manager
+        
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -19,35 +44,76 @@ public class GameManager : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<Health>();
 
-        // specific situations where damage should be different
-        //specialHits.Add(Tuple.Create("Player", "SpaceStation"), 1f);
-        Globals.specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerDied();
+        LevelEndConditions[SceneManager.GetActiveScene().buildIndex]();
     }
 
     void PlayerDied()
     {
         if(playerHealth.currentHealth <= 0)
         {
-            if(!restartingScene)
-            {
-                restartingScene = true;
-                Debug.Log("Player DIED!");
+            // TODO player has died window
+            RestartLevel();
+        }
+    }
 
-                StartCoroutine(ReloadSceneDelay());
+    public void MonitorRace()
+    {
+        if(raceManager)
+        {
+            if(raceManager.RaceFinished & raceManager.RacePassed)
+            {
+                Debug.Log("Passed mission");
+            }
+            else if(raceManager.RaceFinished & !raceManager.RacePassed)
+            {
+                Debug.Log("Failed mission");
+                // fail window
+                RestartLevel();
+            }
+        }
+    }
+
+    public void MonitorMeteors()
+    {
+        if(meteorManager)
+        {
+            if(!meteorManager.SpaceStation)
+            {
+                Debug.Log("SpaceStation dead!!");
+                RestartLevel();
             }
 
+            if(meteorManager.MeteorsPassed)
+            {
+                Debug.Log("passed!!! next level");
+            }
+        }
+    }
+
+    // public void MonitorAI() TODO implement level 3
+    // {
+    //     if()
+    // }
+
+    public void RestartLevel()
+    {
+        if(!restartingScene)
+        {
+            restartingScene = true;
+            StartCoroutine(ReloadSceneDelay());
         }
     }
 
     IEnumerator ReloadSceneDelay()
     {
-        yield return new WaitForSeconds(ReloadDelay);
+        yield return new WaitForSeconds(LevelReloadTime);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

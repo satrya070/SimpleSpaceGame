@@ -8,6 +8,8 @@ TagManager:
   - Protectable
   - SpaceStation
   - Laser
+  - RaceManager
+  - MeteorManager
   layers:
   - Default
   - TransparentFX
