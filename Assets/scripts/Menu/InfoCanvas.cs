@@ -5,22 +5,45 @@ using UnityEngine;
 public class InfoCanvas : MonoBehaviour
 {
     GameObject ResultPanel;
+    GameObject PausePanel;
 
     // Start is called before the first frame update
     void Start()
     {
         ResultPanel = transform.Find("ResultPanel").gameObject;
+        PausePanel = transform.Find("PausePanel").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(GameManager.LevelEnded);
+        CheckLevelResult();
+        CheckPaused();        
+    }
+
+    void CheckLevelResult()
+    {
         if(GameManager.LevelEnded)
         {
-            //Debug.Log("show result panel");
             ResultPanel.SetActive(true);
         }
-        
+    }
+
+    void CheckPaused()
+    {
+        if(GameManager.LevelPaused & !PausePanel.activeSelf)
+        {
+            PausePanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else if(!GameManager.LevelPaused & PausePanel.activeSelf)
+        {
+            PausePanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else if(!GameManager.LevelStarted)
+        {
+            PausePanel.SetActive(false);
+        }
     }
 }

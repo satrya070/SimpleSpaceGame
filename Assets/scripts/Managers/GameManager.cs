@@ -19,9 +19,12 @@ public class GameManager : MonoBehaviour
     public static bool LevelEnded;
     public static bool LevelPassed;
 
+    public static bool LevelPaused;
+
     public Dictionary<int, Action> LevelEndConditions = new Dictionary<int, Action>();
 
     void Awake() {
+        Debug.Log(LevelEndConditions);
         GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
         raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
 
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
         Globals.specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
 
         // populate end win-lose conditions
+        
         LevelEndConditions.Add(1, MonitorRace);
         LevelEndConditions.Add(2, MonitorMeteors);
         // TODO add lv3 AI manager

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    public GameObject pauseMenu;
-    private bool isPaused = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +14,7 @@ public class PauseManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape) & GameManager.LevelStarted)
         {
-            if(isPaused)
+            if(GameManager.LevelPaused)
             {
                 ResumeGame();
             }
@@ -30,15 +27,13 @@ public class PauseManager : MonoBehaviour
         void PauseGame()
         {
             Time.timeScale = 0f;
-            isPaused = true;
-            //pauseMenu.SetActive(true);
+            GameManager.LevelPaused = true;
         }
 
         void ResumeGame()
         {
             Time.timeScale = 1f;
-            isPaused = false;
-            //pauseMenu.SetActive(false);
+            GameManager.LevelPaused = false;
         }
     }
 }
