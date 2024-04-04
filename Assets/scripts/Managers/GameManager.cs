@@ -65,16 +65,18 @@ public class GameManager : MonoBehaviour
 
     public void MonitorRace()
     {
-        if(raceManager)
+        if(raceManager & !LevelEnded)
         {
             if(raceManager.RaceFinished & raceManager.RacePassed)
             {
                 Debug.Log("Passed mission");
+                LevelEnded = true;
             }
             else if(raceManager.RaceFinished & !raceManager.RacePassed)
             {
                 Debug.Log("Failed mission");
                 // fail window
+                LevelEnded = true;
                 RestartLevel();
             }
         }
@@ -82,17 +84,20 @@ public class GameManager : MonoBehaviour
 
     public void MonitorMeteors()
     {
-        if(meteorManager)
+        if(meteorManager & !LevelEnded)
         {
             if(!meteorManager.SpaceStation)
             {
                 Debug.Log("SpaceStation dead!!");
+                LevelEnded = true;
                 RestartLevel();
             }
 
             if(meteorManager.MeteorsPassed)
             {
+                LevelEnded = true;
                 Debug.Log("passed!!! next level");
+                Debug.Log(GameManager.LevelEnded);
             }
         }
     }
