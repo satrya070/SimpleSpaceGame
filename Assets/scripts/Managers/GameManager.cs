@@ -13,17 +13,30 @@ public class GameManager : MonoBehaviour
     RaceManager raceManager;
     meteorManager meteorManager;
     
-    public static Dictionary<Tuple<string, string>, float> specialHits = new Dictionary<Tuple<string, string>, float>();
-    public static bool LevelStarted;
+    public bool LevelStarted;
 
-    public static bool LevelEnded;
-    public static bool LevelPassed;
+    public bool LevelEnded;
+    public bool LevelPassed;
 
-    public static bool LevelPaused;
+    public bool LevelPaused;
+
+    public static GameManager GameManagerInstance;
 
     public Dictionary<int, Action> LevelEndConditions = new Dictionary<int, Action>();
+    public Dictionary<Tuple<string, string>, int> specialBehaviour = new Dictionary<Tuple<string, string>, int>();
 
     void Awake() {
+        Debug.Log($"LevelStarted: {LevelStarted}| LevelPassed: {LevelPassed}");
+        if(GameManagerInstance != null && GameManagerInstance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            GameManagerInstance = this;
+        }
+
+
         Debug.Log(LevelEndConditions);
         GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
         raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
@@ -32,12 +45,12 @@ public class GameManager : MonoBehaviour
         meteorManager = meteorManagerObject ? meteorManagerObject.GetComponent<meteorManager>() : null;
 
         // specific situations where damage should be different
-        Globals.specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
+        specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
 
         // populate end win-lose conditions
-        
         LevelEndConditions.Add(1, MonitorRace);
         LevelEndConditions.Add(2, MonitorMeteors);
+        LevelEndConditions.Add(3, MonitorHunters);
         // TODO add lv3 AI manager
         
     }
@@ -101,15 +114,15 @@ public class GameManager : MonoBehaviour
             {
                 LevelEnded = true;
                 Debug.Log("passed!!! next level");
-                Debug.Log(GameManager.LevelEnded);
+                Debug.Log(GameManager.GameManagerInstance.LevelEnded);
             }
         }
     }
 
-    // public void MonitorAI() TODO implement level 3
-    // {
-    //     if()
-    // }
+    public void MonitorHunters()
+    {
+
+    }
 
     public void RestartLevel()
     {

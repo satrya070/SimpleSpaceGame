@@ -15,8 +15,8 @@ public class Window : MonoBehaviour
 
     public void CloseWindow()
     {
-        Debug.Log("closeWindow");
-        GameManager.LevelStarted = true;
+        GameManager.GameManagerInstance.LevelStarted = true;
+        Debug.Log($"Level started?: {GameManager.GameManagerInstance.LevelStarted}");
         StartPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;

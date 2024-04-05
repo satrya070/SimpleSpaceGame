@@ -12,9 +12,9 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) & GameManager.LevelStarted)
+        if(Input.GetKeyDown(KeyCode.Escape) & GameManager.GameManagerInstance.LevelStarted)
         {
-            if(GameManager.LevelPaused)
+            if(GameManager.GameManagerInstance.LevelPaused)
             {
                 ResumeGame();
             }
@@ -27,13 +27,13 @@ public class PauseManager : MonoBehaviour
         void PauseGame()
         {
             Time.timeScale = 0f;
-            GameManager.LevelPaused = true;
+            GameManager.GameManagerInstance.LevelPaused = true;
         }
 
         void ResumeGame()
         {
             Time.timeScale = 1f;
-            GameManager.LevelPaused = false;
+            GameManager.GameManagerInstance.LevelPaused = false;
         }
     }
 }

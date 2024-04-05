@@ -34,9 +34,9 @@ public class ShotBehavior: MonoBehaviour
 		GameObject hitObject = other.gameObject;
 
 		// check for events where damage should be different from default
-		if(Globals.specialBehaviour.ContainsKey(Tuple.Create(HitterTag, other.gameObject.tag)))
+		if(GameManager.GameManagerInstance.specialBehaviour.ContainsKey(Tuple.Create(HitterTag, other.gameObject.tag)))
 		{
-			DamageObj.DamagePoints = Globals.specialBehaviour[Tuple.Create(HitterTag, other.gameObject.tag)];
+			DamageObj.DamagePoints = GameManager.GameManagerInstance.specialBehaviour[Tuple.Create(HitterTag, other.gameObject.tag)];
 		}
 
 		// if hittable and only first registered collision

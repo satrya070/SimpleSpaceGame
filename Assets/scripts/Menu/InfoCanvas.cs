@@ -23,7 +23,7 @@ public class InfoCanvas : MonoBehaviour
 
     void CheckLevelResult()
     {
-        if(GameManager.LevelEnded)
+        if(GameManager.GameManagerInstance.LevelEnded)
         {
             ResultPanel.SetActive(true);
         }
@@ -31,19 +31,19 @@ public class InfoCanvas : MonoBehaviour
 
     void CheckPaused()
     {
-        if(GameManager.LevelPaused & !PausePanel.activeSelf)
+        if(GameManager.GameManagerInstance.LevelPaused & !PausePanel.activeSelf)
         {
             PausePanel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
-        else if(!GameManager.LevelPaused & PausePanel.activeSelf)
+        else if(!GameManager.GameManagerInstance.LevelPaused & PausePanel.activeSelf)
         {
             PausePanel.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else if(!GameManager.LevelStarted)
-        {
-            PausePanel.SetActive(false);
-        }
+        // else if(!GameManager.LevelStarted)
+        // {
+        //     PausePanel.SetActive(false);
+        // }
     }
 }
