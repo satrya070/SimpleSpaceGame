@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4251815740354033023}
   - component: {fileID: 3480415869916311912}
   - component: {fileID: 288542275332371538}
-  - component: {fileID: 3348144530067739346}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -49,6 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d28f76b7b76e243792d15f8d7f61a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raceManager: {fileID: 0}
+  meteorManager: {fileID: 0}
+  LevelStarted: 0
+  LevelEnded: 0
+  LevelPassed: 0
+  LevelPaused: 0
 --- !u!114 &3480415869916311912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1b891d09f8f5915bef934761c6b4a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
 --- !u!114 &288542275332371538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,24 +84,6 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 1d648729201b7734eace5221ebf3977d, type: 3}
   musicSource: {fileID: 4496007366187075963}
   sfxSource: {fileID: 4243609272267779336}
---- !u!114 &3348144530067739346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 476814122319442949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 922776c1235e3e23ab148cfc92eefa1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  racePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  timerText: {fileID: 0}
-  Countdown: 10
-  OnCount: 0
 --- !u!1 &3870109948844516395
 GameObject:
   m_ObjectHideFlags: 0

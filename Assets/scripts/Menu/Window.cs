@@ -5,6 +5,7 @@ using UnityEngine;
 public class Window : MonoBehaviour
 {
     GameObject StartPanel;
+    // TODO delete this file/class
 
     public void Start()
     {
@@ -16,7 +17,7 @@ public class Window : MonoBehaviour
     public void CloseWindow()
     {
         GameManager.GameManagerInstance.LevelStarted = true;
-        Debug.Log($"Level started?: {GameManager.GameManagerInstance.LevelStarted}");
+        //Debug.Log($"Level started?: {GameManager.GameManagerInstance.LevelStarted}");
         StartPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;

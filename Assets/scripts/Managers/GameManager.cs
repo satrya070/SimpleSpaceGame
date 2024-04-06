@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     bool restartingScene;
     float LevelReloadTime = 5f;
 
-    RaceManager raceManager;
-    meteorManager meteorManager;
+    public RaceManager raceManager;
+    public meteorManager meteorManager;
     
     public bool LevelStarted;
 
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<Tuple<string, string>, int> specialBehaviour = new Dictionary<Tuple<string, string>, int>();
 
     void Awake() {
-        Debug.Log($"LevelStarted: {LevelStarted}| LevelPassed: {LevelPassed}");
+        Debug.Log($"LevelStarted: {LevelStarted}| LevelPaused: {LevelPaused}");
         if(GameManagerInstance != null && GameManagerInstance != this)
         {
             Destroy(this);
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
         }
 
 
-        Debug.Log(LevelEndConditions);
         GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
         raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
 
@@ -60,15 +59,18 @@ public class GameManager : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<Health>();
-
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerDied();
-        LevelEndConditions[SceneManager.GetActiveScene().buildIndex]();
+
+        // No need to check win/lose conditions for menu
+        if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            LevelEndConditions[SceneManager.GetActiveScene().buildIndex]();
+        }
     }
 
     void PlayerDied()
@@ -121,13 +123,13 @@ public class GameManager : MonoBehaviour
 
     public void MonitorHunters()
     {
-
     }
 
     public void RestartLevel()
     {
         if(!restartingScene)
         {
+            LevelPaused = false;
             restartingScene = true;
             StartCoroutine(ReloadSceneDelay());
         }

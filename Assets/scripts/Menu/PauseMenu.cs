@@ -13,6 +13,8 @@ public class PauseMenu : MonoBehaviour
     public void RestartLevel()
     {
         gameObject.SetActive(false);
+        GameManager.GameManagerInstance.LevelStarted = false;
+        GameManager.GameManagerInstance.LevelPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

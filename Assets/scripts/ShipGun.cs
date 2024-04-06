@@ -25,7 +25,7 @@ public class ShipGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) & !GameManager.GameManagerInstance.LevelPaused)
         {
             if(Time.time > shootrateTimestamp)
             {
