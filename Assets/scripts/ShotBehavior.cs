@@ -1,64 +1,79 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
-	GameObject hitObject;
-	GameObject laser;
-	GameObject collisionExplosion;
+	//GameObject collisionExplosion;
 	public float speed;
-	int ShotID;
+	string HitterTag;
+
+	private bool HasHit;
+	private float EndExistTime;
+	private float ExistTime = 2f;
+	Damage DamageObj;
 
 
 	void Update()
 	{
-		float step = speed * Time.deltaTime;
+		MoveLaser();
+	}
 
+	public void setTargetComponents(string _HitterTag, Vector3 target, Damage _DamageObj)
+	{
+		HitterTag = _HitterTag;
+		m_target = target;
+		EndExistTime = Time.time + ExistTime;
+		DamageObj = _DamageObj;
+	}
+
+	void OnCollisionEnter(Collision other)
+    {
+		Debug.Log($"hit {other.gameObject.name}");
+		GameObject hitObject = other.gameObject;
+
+		// check for events where damage should be different from default
+		if(GameManager.GameManagerInstance.specialBehaviour.ContainsKey(Tuple.Create(HitterTag, other.gameObject.tag)))
+		{
+			DamageObj.DamagePoints = GameManager.GameManagerInstance.specialBehaviour[Tuple.Create(HitterTag, other.gameObject.tag)];
+		}
+
+		// if hittable and only first registered collision
+		if(hitObject.GetComponent<Health>() != null & !HasHit)
+		{
+			Debug.Log(HitterTag);
+			HasHit = true;
+			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{shooterObject.GetComponent<Damage>().DamagePoints}");
+			CombatHandler.ApplyDamage(hitObject, DamageObj);
+			Destroy(gameObject);
+		}
+	}
+
+	void MoveLaser()
+	{
+		// make it travel max existtime
+		if(Time.time > EndExistTime)
+		{
+			Destroy(gameObject);
+		}
+
+		float step = speed * Time.deltaTime;
 		if (m_target != null)
 		{
-			if (transform.position == m_target)
-			{
-				// if hit an object with health
-				if (hitObject != null && hitObject.GetComponent<Health>() != null)
-				{	
-					// make sure that during update applyDamage prt 1 unique shot
-					if (ShotID != hitObject.gameObject.GetInstanceID())
-					{
-                        ShotID = hitObject.gameObject.GetInstanceID();
-                        CombatHandler.ApplyDamage(hitObject, GameObject.Find("PlayerSpaceShip").GetComponent<Damage>());
-						GameObject.Destroy(laser);
-					}
-				}
-
-				// TODO still needed? (laser explosion, if not delete)
-				explode();
-				return;
-			}
 			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
 		}
 	}
 
-	public void setTarget(Vector3 target)
-	{
-		m_target = target;
-	}
-
-	public void setHitComponents(GameObject _hitObject, GameObject _laser)
-	{
-		hitObject = _hitObject;
-		laser = _laser;
-    }
-
-	void explode()
-	{
-		if (collisionExplosion != null)
-		{
-			GameObject explosion = (GameObject)Instantiate(
-				collisionExplosion, transform.position, transform.rotation
-			);
-			Destroy(gameObject);
-			Destroy(explosion, 1f);
-		}
-	}
+	// void explode()
+	// {
+	// 	if (collisionExplosion != null)
+	// 	{
+	// 		GameObject explosion = (GameObject)Instantiate(
+	// 			collisionExplosion, transform.position, transform.rotation
+	// 		);
+	// 		Destroy(gameObject);
+	// 		Destroy(explosion, 1f);
+	// 	}
+	// }
 }

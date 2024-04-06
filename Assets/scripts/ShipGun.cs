@@ -6,7 +6,8 @@ using UnityEngine;
 public class ShipGun : MonoBehaviour
 {
     public float shootRate;
-    private float m_shootRateTimeStamp;
+    private float shootrateTimestamp;
+    PlayerSpaceship shipOwner;
 
     public GameObject m_shotPrefab;
     RaycastHit hit;
@@ -16,6 +17,7 @@ public class ShipGun : MonoBehaviour
 
     private void Start()
     {
+        shipOwner = transform.root.GetComponent<PlayerSpaceship>();
         audioSourceGun = GetComponent<AudioSource>();
         audioSourceGun.playOnAwake = false;
     }
@@ -23,38 +25,28 @@ public class ShipGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) & !GameManager.GameManagerInstance.LevelPaused)
         {
-            if(Time.time > m_shootRateTimeStamp)
+            if(Time.time > shootrateTimestamp)
             {
                 shootRay();
-                m_shootRateTimeStamp = Time.time + shootRate;
+                shootrateTimestamp = Time.time + shootRate;
             }
         }
     }
 
     void shootRay()
     {
-        if (audioSourceGun)
-        {
-            audioSourceGun.Play();
-        }
+        AudioManager.Instance.PlaySfx("LaserGun");
         Ray ray = new Ray(transform.position, transform.forward * range);
 
         Debug.DrawRay(transform.position, ray.direction * 1000, Color.green, 10f);
-        if (Physics.Raycast(ray, out hit, range))
-        {
-            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(hit.point);
-            laser.GetComponent<ShotBehavior>().setHitComponents(hit.transform.gameObject, laser);
 
-            //Debug.Log($"Hit object: {hit.collider}!");
-        }
-        else
-        {
-            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
-            laser.GetComponent<ShotBehavior>().setTarget(transform.position + (transform.forward * range));
-            GameObject.Destroy(laser, 2f);
-        }
+        GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
+        laser.GetComponent<ShotBehavior>().setTargetComponents(
+            shipOwner.gameObject.tag,
+            transform.position + (transform.forward * range),
+            shipOwner.GetComponent<Damage>()
+        );
     }
 }

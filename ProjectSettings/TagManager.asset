@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Protectable
+  - SpaceStation
+  - Laser
+  - RaceManager
+  - MeteorManager
   layers:
   - Default
   - TransparentFX

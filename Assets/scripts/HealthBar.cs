@@ -5,25 +5,30 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider healthBar;
-    //int PlayerCurrentHealth;
+    Slider healthBar;
+    GameObject Owner;
+    Health OwnerHealth;
+    GameObject MainCameraTarget;
 
-
-    [SerializeField]
-    PlayerSpaceship Player;
-    Health PlayerHealth;
-
-    // Start is called before the first frame update
     void Start()
     {
-        PlayerHealth = Player.GetComponent<Health>();  //GameObject.Find("PlayerSpaceShip").GetComponent<Health>();
-        //PlayerCurrentHealth = PlayerHealth.currentHealth; //GameObject.Find("PlayerSpaceShip").GetComponent<Health>().currentHealth;
-        //healthBar = healthBar.GetComponent<Slider>();
-        //healthBar.value = PlayerHealth - 50; 
+        healthBar = GetComponent<Slider>();
+        Owner = transform.root.gameObject;
+        OwnerHealth = Owner.GetComponent<Health>();
+
+        if(gameObject.transform.root.gameObject.tag != "Player")
+        {
+            MainCameraTarget = GameObject.FindWithTag("MainCamera");
+        }
     }
 
     void Update()
     {
-        healthBar.value = PlayerHealth.currentHealth;
+        healthBar.value = OwnerHealth.currentHealth;
+
+        if(MainCameraTarget)
+        {
+            transform.parent.transform.LookAt(MainCameraTarget.transform.position);
+        }
     }
 }
