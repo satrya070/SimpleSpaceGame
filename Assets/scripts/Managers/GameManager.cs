@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
             GameManagerInstance = this;
         }
 
-
         GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
         raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
 
@@ -90,6 +89,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Passed mission");
                 LevelEnded = true;
+                raceManager = null;
             }
             else if(raceManager.RaceFinished & !raceManager.RacePassed)
             {
@@ -125,12 +125,21 @@ public class GameManager : MonoBehaviour
     {
     }
 
+    public void ResetGamemanagerVariables()
+    {
+        GameManagerInstance.LevelEnded = false;
+        GameManagerInstance.LevelPassed = false;
+        GameManagerInstance.LevelStarted = false;
+        GameManagerInstance.LevelPaused = false;
+    }
+
     public void RestartLevel()
     {
         if(!restartingScene)
         {
-            LevelPaused = false;
+            //LevelPaused = false;
             restartingScene = true;
+            ResetGamemanagerVariables();
             StartCoroutine(ReloadSceneDelay());
         }
     }

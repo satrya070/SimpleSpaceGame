@@ -106,6 +106,7 @@ public class InfoCanvas : MonoBehaviour
 
     public void NextLevelButton()
     {
+        GameManager.GameManagerInstance.ResetGamemanagerVariables();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
