@@ -16,7 +16,11 @@ public class RaceManager : MonoBehaviour
     public bool RaceFinished = false;
     public bool RacePassed = false;
 
-    // Start is called before the first frame update
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         Instance = this;

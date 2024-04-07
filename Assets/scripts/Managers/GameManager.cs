@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     bool restartingScene;
     float LevelReloadTime = 5f;
 
-    public RaceManager raceManager;
     public meteorManager meteorManager;
     
     public bool LevelStarted;
@@ -35,9 +34,6 @@ public class GameManager : MonoBehaviour
         {
             GameManagerInstance = this;
         }
-
-        GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
-        raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
 
         GameObject meteorManagerObject = GameObject.FindWithTag("MeteorManager");
         meteorManager = meteorManagerObject ? meteorManagerObject.GetComponent<meteorManager>() : null;
@@ -83,15 +79,14 @@ public class GameManager : MonoBehaviour
 
     public void MonitorRace()
     {
-        if(raceManager & !LevelEnded)
+        if(RaceManager.Instance & RaceManager.Instance.RaceFinished & !LevelEnded)
         {
-            if(raceManager.RaceFinished & raceManager.RacePassed)
+            if(RaceManager.Instance & RaceManager.Instance.RacePassed)
             {
                 Debug.Log("Passed mission");
                 LevelEnded = true;
-                raceManager = null;
             }
-            else if(raceManager.RaceFinished & !raceManager.RacePassed)
+            else if(RaceManager.Instance & !RaceManager.Instance.RacePassed)
             {
                 Debug.Log("Failed mission");
                 // fail window

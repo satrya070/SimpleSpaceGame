@@ -76,7 +76,7 @@ public class InfoCanvas : MonoBehaviour
 
     void SetlevelText()
     {
-        if(GameManager.GameManagerInstance.raceManager)
+        if(RaceManager.Instance)
         {
             StartTitle.text = "Welcome to Level 1!";
             StartText.text = "The goal to finish the racetrack in the given time. \n The red ring is the ring to follow in the course";
