@@ -5,7 +5,8 @@ using System.Linq;
 
 public class meteorManager : MonoBehaviour
 {
-    float spawnRadius = 100f;
+    public static meteorManager instance;
+    float spawnRadius = 50f;
 
     [SerializeField]
     GameObject asteroidPrefab;
@@ -16,6 +17,11 @@ public class meteorManager : MonoBehaviour
     public bool MeteorsPassed = false;
 
     public GameObject SpaceStation;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     bool restartingScene;
     float LevelReloadTime = 5f;
 
-    public meteorManager meteorManager;
+    //public meteorManager meteorManager;
     
     public bool LevelStarted;
 
@@ -35,9 +35,6 @@ public class GameManager : MonoBehaviour
             GameManagerInstance = this;
         }
 
-        GameObject meteorManagerObject = GameObject.FindWithTag("MeteorManager");
-        meteorManager = meteorManagerObject ? meteorManagerObject.GetComponent<meteorManager>() : null;
-
         // specific situations where damage should be different
         specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
 
@@ -45,8 +42,9 @@ public class GameManager : MonoBehaviour
         LevelEndConditions.Add(1, MonitorRace);
         LevelEndConditions.Add(2, MonitorMeteors);
         LevelEndConditions.Add(3, MonitorHunters);
-        // TODO add lv3 AI manager
-        
+
+        // on each scene reload(restart/nextlevel) reset manager variables
+        ResetGamemanagerVariables();
     }
 
     // Start is called before the first frame update
@@ -83,8 +81,8 @@ public class GameManager : MonoBehaviour
         {
             if(RaceManager.Instance & RaceManager.Instance.RacePassed)
             {
-                Debug.Log("Passed mission");
                 LevelEnded = true;
+                Debug.Log($"Passed mission: {LevelEnded}");
             }
             else if(RaceManager.Instance & !RaceManager.Instance.RacePassed)
             {
@@ -98,20 +96,19 @@ public class GameManager : MonoBehaviour
 
     public void MonitorMeteors()
     {
-        if(meteorManager & !LevelEnded)
+        if(meteorManager.instance & !LevelEnded)
         {
-            if(!meteorManager.SpaceStation)
+            if(!meteorManager.instance.SpaceStation)
             {
                 Debug.Log("SpaceStation dead!!");
                 LevelEnded = true;
                 RestartLevel();
             }
 
-            if(meteorManager.MeteorsPassed)
+            if(meteorManager.instance.MeteorsPassed)
             {
                 LevelEnded = true;
                 Debug.Log("passed!!! next level");
-                Debug.Log(GameManager.GameManagerInstance.LevelEnded);
             }
         }
     }

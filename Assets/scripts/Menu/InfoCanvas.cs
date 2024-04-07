@@ -84,13 +84,13 @@ public class InfoCanvas : MonoBehaviour
             ResultTitle.text = "Passed level 1!";
             ResultText.text = "Finished the race in {}!";
         }
-        else if(GameManager.GameManagerInstance.meteorManager)
+        else if(meteorManager.instance)
         {
             StartTitle.text = "Welcome to Level 2!";
             StartText.text = "A Meteorshower is set on impacting our spacestation." +
             "Make sure the spacestation makes it through by destroying the meteors before impact.";
 
-            GameManager.GameManagerInstance.meteorManager.SpaceStation.gameObject.GetComponent<Health>();
+            //meteorManager.instance.SpaceStation.gameObject.GetComponent<Health>();
             ResultTitle.text = "Passed level 2!";
             ResultText.text = "Finished the race in {}!";
         }
@@ -106,7 +106,6 @@ public class InfoCanvas : MonoBehaviour
 
     public void NextLevelButton()
     {
-        GameManager.GameManagerInstance.ResetGamemanagerVariables();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
