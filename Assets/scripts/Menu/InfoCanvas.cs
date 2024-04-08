@@ -9,6 +9,7 @@ public class InfoCanvas : MonoBehaviour
     GameObject StartPanel;
     GameObject ResultPanel;
     GameObject PausePanel;
+    GameObject GameoverPanel;
 
     TextMeshProUGUI StartTitle;
     TextMeshProUGUI StartText;
@@ -26,6 +27,7 @@ public class InfoCanvas : MonoBehaviour
         StartPanel = transform.Find("StartPanel").gameObject;
         ResultPanel = transform.Find("ResultPanel").gameObject;
         PausePanel = transform.Find("PausePanel").gameObject;
+        GameoverPanel = transform.Find("GameoverPanel").gameObject;
 
         StartTitle = StartPanel.transform.Find("InfoTitle").GetComponent<TextMeshProUGUI>();
         StartText = StartPanel.transform.Find("InfoText").GetComponent<TextMeshProUGUI>();
@@ -50,8 +52,15 @@ public class InfoCanvas : MonoBehaviour
     {
         if(GameManager.GameManagerInstance.LevelEnded)
         {
-            Cursor.lockState = CursorLockMode.None;
-            ResultPanel.SetActive(true);
+            if (GameManager.GameManagerInstance.LevelPassed)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                ResultPanel.SetActive(true);
+            }
+            else
+            {
+                GameoverPanel.SetActive(true);
+            }
         }
     }
 

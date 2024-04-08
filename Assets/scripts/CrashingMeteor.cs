@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrashingMeteor : MonoBehaviour
 {
     public Transform crashPoint;
-    public float crashSpeed = 100f;
+    public float crashSpeed = 5000f;
     Rigidbody rb;
     Damage damage;
 

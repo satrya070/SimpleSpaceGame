@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     Health playerHealth;
     bool restartingScene;
-    float LevelReloadTime = 5f;
+    float LevelReloadTime = 3f;
     
     public bool LevelStarted;
     public bool LevelEnded;
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
             if(RaceManager.Instance & RaceManager.Instance.RacePassed)
             {
                 LevelEnded = true;
+                LevelPassed = true;
                 Debug.Log($"Passed mission: {LevelEnded}");
             }
             else if(RaceManager.Instance & !RaceManager.Instance.RacePassed)
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
             if(meteorManager.instance.MeteorsPassed)
             {
                 LevelEnded = true;
+                LevelPassed= true;
                 Debug.Log("passed!!! next level");
             }
         }
