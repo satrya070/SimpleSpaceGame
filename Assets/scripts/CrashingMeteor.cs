@@ -24,7 +24,11 @@ public class CrashingMeteor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(crashPoint)
+    }
+
+    void FixedUpdate()
+    {
+        if (crashPoint)
         {
             //Debug.Log("Moving rock!");
             Vector3 moveDirection = (crashPoint.position - transform.position).normalized;

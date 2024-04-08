@@ -9,14 +9,10 @@ public class GameManager : MonoBehaviour
     Health playerHealth;
     bool restartingScene;
     float LevelReloadTime = 5f;
-
-    //public meteorManager meteorManager;
     
     public bool LevelStarted;
-
     public bool LevelEnded;
     public bool LevelPassed;
-
     public bool LevelPaused;
 
     public static GameManager GameManagerInstance;
