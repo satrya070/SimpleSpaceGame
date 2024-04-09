@@ -99,9 +99,17 @@ public class InfoCanvas : MonoBehaviour
             StartText.text = "A Meteorshower is set on impacting our spacestation." +
             "Make sure the spacestation makes it through by destroying the meteors before impact.";
 
-            //meteorManager.instance.SpaceStation.gameObject.GetComponent<Health>();
             ResultTitle.text = "Passed level 2!";
             ResultText.text = "Finished the race in {}!";
+        }
+        else
+        {
+            StartTitle.text = "Welcome to Level 3!";
+            StartText.text = "Some people want to hunt you down." +
+            "Kill them and survive or die.";
+
+            ResultTitle.text = "Passed the last level 3!";
+            ResultText.text = "You have completed the last level!";
         }
     }
 
@@ -115,6 +123,14 @@ public class InfoCanvas : MonoBehaviour
 
     public void NextLevelButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // next level and on last level load main menu
+        if (SceneManager.GetActiveScene().buildIndex < 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

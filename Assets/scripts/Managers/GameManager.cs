@@ -113,6 +113,11 @@ public class GameManager : MonoBehaviour
 
     public void MonitorHunters()
     {
+        if(LevelPassed & !LevelEnded)
+        {
+            Debug.Log("Killed all emenymies");
+            LevelEnded = true;
+        }
     }
 
     public void ResetGamemanagerVariables()
