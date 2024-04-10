@@ -5,17 +5,28 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     // public variables
-    //[SerializeField]
     public int maxHealth;
+
+
 
     public int currentHealth;
     
     [SerializeField]
     GameObject explosion;
 
+    public Damage collisionDamage;
+    public Damage PlayerCollisionDamage;
+
     void Start()
     {
         currentHealth = maxHealth;
+        InitializeCollisionDamage();
+    }
+
+    void InitializeCollisionDamage()
+    {
+        collisionDamage = new Damage();
+        PlayerCollisionDamage = new Damage();
     }
 
     public void TakeDamage(Damage damage)
@@ -46,6 +57,16 @@ public class Health : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "PlayerSpaceShip")
+        {
+            //Debug.Log(other.gameObject.name);
+            CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
+            CombatHandler.ApplyDamage(gameObject, collisionDamage);
         }
     }
 }

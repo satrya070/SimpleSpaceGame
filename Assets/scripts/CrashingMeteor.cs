@@ -8,6 +8,7 @@ public class CrashingMeteor : MonoBehaviour
     public float crashSpeed = 5000f;
     Rigidbody rb;
     Damage damage;
+    Health health;
 
     [SerializeField]
     GameObject explosion;
@@ -19,6 +20,15 @@ public class CrashingMeteor : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         damage = GetComponent<Damage>();
+        health = GetComponent<Health>();
+
+        SetCollisionDamage();
+    }
+
+    void SetCollisionDamage()
+    {
+        health.collisionDamage.DamagePoints = 25;
+        health.PlayerCollisionDamage.DamagePoints = 15;
     }
 
     // Update is called once per frame
@@ -41,14 +51,9 @@ public class CrashingMeteor : MonoBehaviour
         {
             Debug.Log(other.gameObject.name);
             CombatHandler.ApplyDamage(other.gameObject, damage);
+            CombatHandler.ApplyDamage(gameObject, health.collisionDamage);  // same damage as player collision
 
-            if (explosion)
-            {
-                GameObject explode = Instantiate(explosion, transform.position, transform.rotation);//.parent.transform);
-                Destroy(explode, 1f);
-            }
-
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
