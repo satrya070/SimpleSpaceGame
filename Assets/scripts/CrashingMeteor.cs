@@ -52,8 +52,6 @@ public class CrashingMeteor : MonoBehaviour
             Debug.Log(other.gameObject.name);
             CombatHandler.ApplyDamage(other.gameObject, damage);
             CombatHandler.ApplyDamage(gameObject, health.collisionDamage);  // same damage as player collision
-
-            //Destroy(gameObject);
         }
     }
 }

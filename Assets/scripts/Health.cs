@@ -6,13 +6,11 @@ public class Health : MonoBehaviour
 {
     // public variables
     public int maxHealth;
-
-
-
     public int currentHealth;
     
     [SerializeField]
     GameObject explosion;
+    [SerializeField] string DeadSound;
 
     public Damage collisionDamage;
     public Damage PlayerCollisionDamage;
@@ -47,6 +45,10 @@ public class Health : MonoBehaviour
             Debug.Log($"instantiate explosion! at: {transform.position}");
             GameObject explode = Instantiate(explosion, transform.position, transform.rotation);//.parent.transform);
             Destroy(explode, 1f);
+        }
+        if(DeadSound != "")
+        {
+            AudioManager.Instance.PlaySfx(DeadSound);
         }
 
         if(gameObject.tag == "Player")
