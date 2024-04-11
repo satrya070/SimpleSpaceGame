@@ -5,21 +5,24 @@ using UnityEngine;
 public class CrashingMeteor : MonoBehaviour
 {
     public Transform crashPoint;
-    public float crashSpeed = 5000f;
+    public float crashSpeed = 50000f;
     Rigidbody rb;
-    Damage damage;
+    Damage SpaceshipDamage;
     Health health;
+    bool HasCollided;
 
     [SerializeField]
     GameObject explosion;
 
     List<string> TargetTags = new List<string>() {"Player", "SpaceStation" };
+    public Damage collisionDamage;
+    public Damage PlayerCollisionDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        damage = GetComponent<Damage>();
+        SpaceshipDamage = GetComponent<Damage>();
         health = GetComponent<Health>();
 
         SetCollisionDamage();
@@ -27,8 +30,11 @@ public class CrashingMeteor : MonoBehaviour
 
     void SetCollisionDamage()
     {
-        health.collisionDamage.DamagePoints = 25;
-        health.PlayerCollisionDamage.DamagePoints = 15;
+        collisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+        PlayerCollisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+
+        collisionDamage.DamagePoints = 25;
+        PlayerCollisionDamage.DamagePoints = 20;
     }
 
     // Update is called once per frame
@@ -47,11 +53,19 @@ public class CrashingMeteor : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        if (TargetTags.Contains(other.gameObject.tag))
+        if (TargetTags.Contains(other.gameObject.tag) & !HasCollided)
         {
-            Debug.Log(other.gameObject.name);
-            CombatHandler.ApplyDamage(other.gameObject, damage);
-            CombatHandler.ApplyDamage(gameObject, health.collisionDamage);  // same damage as player collision
+            HasCollided = true;
+
+            if (other.gameObject.tag == "SpaceStation")
+            {
+                CombatHandler.ApplyDamage(other.gameObject, SpaceshipDamage);
+            }
+            else
+            {
+                CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
+            }
+            CombatHandler.ApplyDamage(gameObject, collisionDamage);
         }
     }
 }

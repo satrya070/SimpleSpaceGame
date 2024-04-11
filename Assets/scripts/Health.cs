@@ -12,20 +12,20 @@ public class Health : MonoBehaviour
     GameObject explosion;
     [SerializeField] string DeadSound;
 
-    public Damage collisionDamage;
-    public Damage PlayerCollisionDamage;
+    //public Damage collisionDamage;
+    //public Damage PlayerCollisionDamage;
 
     void Start()
     {
         currentHealth = maxHealth;
-        InitializeCollisionDamage();
+        //InitializeCollisionDamage();
     }
 
-    void InitializeCollisionDamage()
-    {
-        collisionDamage = new Damage();
-        PlayerCollisionDamage = new Damage();
-    }
+    //void InitializeCollisionDamage()
+    //{
+    //    collisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+    //    PlayerCollisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+    //}
 
     public void TakeDamage(Damage damage)
     {
@@ -62,13 +62,13 @@ public class Health : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "PlayerSpaceShip")
-        {
-            //Debug.Log(other.gameObject.name);
-            CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
-            CombatHandler.ApplyDamage(gameObject, collisionDamage);
-        }
-    }
+    //void OnCollisionEnter(Collision other)
+    //{
+    //    if (other.gameObject.tag == "PlayerSpaceShip")
+    //    {
+    //        //Debug.Log(other.gameObject.name);
+    //        CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
+    //        CombatHandler.ApplyDamage(gameObject, collisionDamage);
+    //    }
+    //}
 }

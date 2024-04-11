@@ -207,6 +207,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3728020993915541804, guid: c63f975a6cfaec29cb2f15fd7085eb96, type: 3}
+      propertyPath: listo.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6419800697153440211, guid: c63f975a6cfaec29cb2f15fd7085eb96, type: 3}
       propertyPath: m_Name
       value: PlayerSpaceShip
@@ -1888,6 +1892,7 @@ MonoBehaviour:
   DeadSound: 
   collisionDamage: {fileID: 0}
   PlayerCollisionDamage: {fileID: 0}
+  listo: []
 --- !u!1001 &2051737459
 PrefabInstance:
   m_ObjectHideFlags: 0
