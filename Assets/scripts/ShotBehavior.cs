@@ -5,7 +5,6 @@ using System;
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
-	//GameObject collisionExplosion;
 	public float speed;
 	string HitterTag;
 
@@ -64,16 +63,4 @@ public class ShotBehavior: MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
 		}
 	}
-
-	// void explode()
-	// {
-	// 	if (collisionExplosion != null)
-	// 	{
-	// 		GameObject explosion = (GameObject)Instantiate(
-	// 			collisionExplosion, transform.position, transform.rotation
-	// 		);
-	// 		Destroy(gameObject);
-	// 		Destroy(explosion, 1f);
-	// 	}
-	// }
 }
