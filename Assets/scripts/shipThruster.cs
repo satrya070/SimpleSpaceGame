@@ -22,7 +22,7 @@ public class shipThruster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentEmissionRate);
+        //Debug.Log(currentEmissionRate);
         if(Player.velocity.magnitude > 20f)
         {
             Debug.Log($"{Player.velocity.magnitude} - {currentEmissionRate}");

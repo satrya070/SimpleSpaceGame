@@ -51,7 +51,6 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sfxSource.clip = sound.clip;
             sfxSource.PlayOneShot(sound.clip);
         }
     }

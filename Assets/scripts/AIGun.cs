@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class AIGun : MonoBehaviour
@@ -54,7 +55,8 @@ public class AIGun : MonoBehaviour
         laser.GetComponent<ShotBehavior>().setTargetComponents(
             shipOwner.gameObject.tag,
             transform.position + (PlayerDirection * LaserRange),
-            shipOwner.GetComponent<Damage>()
+            shipOwner.GetComponent<Damage>(),
+            shipOwner.gameObject.tag
         );
     }
 }

@@ -50,7 +50,8 @@ public class ShipGun : MonoBehaviour
         laser.GetComponent<ShotBehavior>().setTargetComponents(
             shipOwner.gameObject.tag,
             transform.position + (transform.forward * range),
-            shipOwner.GetComponent<Damage>()
+            shipOwner.GetComponent<Damage>(),
+            shipOwner.gameObject.tag
         );
     }
 }
