@@ -13,13 +13,9 @@ public class ShipGun : MonoBehaviour
     RaycastHit hit;
     float range = 1000f;
 
-    AudioSource audioSourceGun;
-
     private void Start()
     {
         shipOwner = transform.root.GetComponent<PlayerSpaceship>();
-        audioSourceGun = GetComponent<AudioSource>();
-        audioSourceGun.playOnAwake = false;
     }
 
     // Update is called once per frame

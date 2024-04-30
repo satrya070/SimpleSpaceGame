@@ -44,6 +44,11 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void MarkNextPoint()
+    {
+        racePoints[0].transform.localScale = racePoints[0].transform.localScale * 1.5f;
+    }
+
     void RaceResult()
     {
         if(!RaceFinished)
