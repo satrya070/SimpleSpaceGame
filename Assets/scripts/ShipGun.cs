@@ -13,9 +13,18 @@ public class ShipGun : MonoBehaviour
     RaycastHit hit;
     float range = 1000f;
 
+    RectTransform crosshair;
+    Camera mainCamera;
+
     private void Start()
     {
         shipOwner = transform.root.GetComponent<PlayerSpaceship>();
+        crosshair = GameObject.Find("crosshair").GetComponent<RectTransform>();
+        if(crosshair != null) { 
+            Debug.Log( crosshair.TransformPoint(crosshair.anchoredPosition));
+            Debug.Log(Screen.currentResolution);
+        }
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -49,5 +58,15 @@ public class ShipGun : MonoBehaviour
             shipOwner.GetComponent<Damage>(),
             shipOwner.gameObject.tag
         );
+
+        // draw a line throught the bottom right frustum (adds/subtracts 1f) for 0 start index
+        //Debug.DrawLine(mainCamera.transform.position, mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f)), Color.red, 5f, false);
+
+        Vector3 orgvec = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f));
+        Vector3 vecmul = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f)) * 2f;
+        Debug.Log($"{orgvec} - {vecmul}");
+
+        Vector3 DirectionVector = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f)) - mainCamera.transform.position; 
+        Debug.DrawLine(mainCamera.transform.position, mainCamera.transform.position + (DirectionVector * 100f), Color.red, 5f, false);
     }
 }
