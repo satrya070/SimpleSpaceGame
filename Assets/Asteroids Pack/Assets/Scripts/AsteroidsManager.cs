@@ -15,7 +15,6 @@ public class AsteroidsManager : MonoBehaviour
     [SerializeField]
     int gridSpacing = 100;
 
-
     void Start()
     {
         PlaceAsteroids();

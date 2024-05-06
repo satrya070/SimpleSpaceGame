@@ -6,7 +6,7 @@ using System.Linq;
 public class meteorManager : MonoBehaviour
 {
     public static meteorManager instance;
-    float spawnRadius = 50f;
+    float spawnRadius = 80f;
 
     [SerializeField]
     GameObject asteroidPrefab;

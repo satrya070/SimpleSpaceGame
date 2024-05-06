@@ -28,7 +28,7 @@ public class RacePoint : MonoBehaviour
             {
                 RaceManager.Instance.racePoints.RemoveAt(0);
                 //Debug.Log("next mark collected!");
-                //AudioManager.Instance.PlaySfx("RingCollect");
+                AudioManager.Instance.PlaySfx("ringCollect");
                 Destroy(gameObject);
 
                 if(!RaceManager.Instance.RaceFinished)

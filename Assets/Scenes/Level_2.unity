@@ -265,10 +265,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1645696492210165113, guid: c63f975a6cfaec29cb2f15fd7085eb96, type: 3}
-      propertyPath: shootRate
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 6419800697153440211, guid: c63f975a6cfaec29cb2f15fd7085eb96, type: 3}
       propertyPath: m_Name
       value: PlayerSpaceShip

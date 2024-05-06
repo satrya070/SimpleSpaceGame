@@ -82,6 +82,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 1d648729201b7734eace5221ebf3977d, type: 3}
   - name: MeteorDeath
     clip: {fileID: 8300000, guid: 898e78a029b080b4b806ac9fc99be81c, type: 3}
+  - name: ringCollect
+    clip: {fileID: 8300000, guid: 10310847f7e66a442ac40762acb9d6b7, type: 3}
   musicSource: {fileID: 4496007366187075963}
   sfxSource: {fileID: 4243609272267779336}
 --- !u!1 &3870109948844516395
