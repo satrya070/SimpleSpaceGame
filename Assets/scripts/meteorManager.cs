@@ -10,6 +10,7 @@ public class meteorManager : MonoBehaviour
 
     [SerializeField]
     GameObject asteroidPrefab;
+    [SerializeField] int MeteorsToSpawn = 10;
 
     public Transform[] spawnPoints;
 
@@ -40,14 +41,15 @@ public class meteorManager : MonoBehaviour
 
     IEnumerator RandomMeteorSpawner()
     {
-        while(MeteorsSpawned < 5 & SpaceStation)
+        while(MeteorsSpawned < MeteorsToSpawn & SpaceStation)
         {
             yield return new WaitForSeconds(Random.Range(1f, 2f));
 
             SpawnMeteor();
             MeteorsSpawned += 1;
 
-            if(MeteorsSpawned == 5)
+            // coroutine to check when exactly the last meteor is destroyed
+            if(MeteorsSpawned == MeteorsToSpawn)
             {
                 yield return StartCoroutine(MeteorResult());
             }

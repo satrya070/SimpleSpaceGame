@@ -5,10 +5,29 @@ using UnityEngine;
 public class rotateRing : MonoBehaviour
 {
     public float rotationSpeed = 30f;
+    [SerializeField] bool NonCenteredRotated;
+    Vector3 rotationPoint;
+
+    void Start()
+    {
+        if(NonCenteredRotated)
+        {
+            rotationPoint = transform.position + new Vector3(30f, 0f, 0f);
+        }
+        else
+        {
+            rotationPoint = GetComponent<Collider>().bounds.center;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(GetComponent<Collider>().bounds.center, transform.forward, rotationSpeed * Time.deltaTime);
+        applyRingRotation();
+    }
+
+    void applyRingRotation()
+    {
+        transform.RotateAround(rotationPoint, transform.forward, rotationSpeed * Time.deltaTime);
     }
 }
