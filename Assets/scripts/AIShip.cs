@@ -9,7 +9,7 @@ public class AIShip : MonoBehaviour
 
     Rigidbody rb;
     public float MinRangeDist;
-    float maxSpeed = 100f;
+    float maxSpeed = 70f;
     float rotationSpeed = 3f;
 
     float BrakeMark = 50f;

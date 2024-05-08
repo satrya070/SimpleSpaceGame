@@ -77,18 +77,5 @@ public class ShipGun : MonoBehaviour
             shipOwner.gameObject.tag
         );
 
-        // TODO delete if no issues
-        // draw a line throught the bottom right frustum (adds/subtracts 1f) for 0 start index
-        //Debug.DrawLine(mainCamera.transform.position, mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f)), Color.red, 5f, false);
-
-        //Vector3 DirectionVector = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth -1, 1f,1f)) - mainCamera.transform.position; 
-        //Debug.DrawLine(mainCamera.transform.position, mainCamera.transform.position + (DirectionVector * 100f), Color.red, 5f, false);
-
-        // get middle of screen then adds crosshair y-offset
-        // Vector3 SceenCenter = new Vector3((Screen.width / 2), (Screen.height / 2 + 19.1f), 1f);
-        // // convert that screenpoint to a world point & get the direction vector relative to camera position
-        // Vector3 DirectionVector2 = mainCamera.ScreenToWorldPoint(SceenCenter) - mainCamera.transform.position;
-        // Debug.DrawLine(mainCamera.transform.position, mainCamera.transform.position + (DirectionVector2 * 300f), Color.red, 5f, true);
-
     }
 }
