@@ -25,7 +25,7 @@ public class shipThruster : MonoBehaviour
         //Debug.Log(currentEmissionRate);
         if(Player.velocity.magnitude > 20f)
         {
-            Debug.Log($"{Player.velocity.magnitude} - {currentEmissionRate}");
+            //Debug.Log($"{Player.velocity.magnitude} - {currentEmissionRate}");
             emission.rateOverTime = 13f;
         }
         else

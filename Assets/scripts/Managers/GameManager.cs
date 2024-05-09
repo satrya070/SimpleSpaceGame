@@ -7,7 +7,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     Health playerHealth;
-    bool restartingScene;
+    public bool restartingScene;
     float LevelReloadTime = 3f;
     
     public bool LevelStarted;
@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
             }
             else if(RaceManager.Instance & !RaceManager.Instance.RacePassed)
             {
-                Debug.Log("Failed mission");
                 // fail window
                 LevelEnded = true;
                 RestartLevel();
@@ -133,8 +132,10 @@ public class GameManager : MonoBehaviour
         if(!restartingScene)
         {
             //LevelPaused = false;
+            //Debug.Log("restarting missoin");
             restartingScene = true;
             ResetGamemanagerVariables();
+            //Debug.Log("caliing coroutine restarts");
             StartCoroutine(ReloadSceneDelay());
         }
     }
@@ -144,5 +145,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(LevelReloadTime);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        restartingScene = false;
     }
 }
