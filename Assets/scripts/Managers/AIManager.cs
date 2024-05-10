@@ -39,7 +39,7 @@ public class AIManager : MonoBehaviour
         {
             Debug.Log("second wave started!");
 
-            float spawnDistance = 60f;
+            float spawnDistance = 200f;
             Vector3 playerLocation = GameObject.FindWithTag("Player").transform.position;
             //Vector3 enemySpawnLocation = playerLocation + Random.onUnitSphere * spawnDistance;
             //Vector3 enemySpawnLocation = playerLocation + Random.onUnitSphere * spawnDistance;

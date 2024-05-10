@@ -66,7 +66,7 @@ public class ShipGun : MonoBehaviour
         {
             // if ray crossheir has hit send laser to point of hit instead
             laserTarget = crossHit.point;
-            //Debug.Log($"Cross has a hit!: {crossHit.point}");
+            Debug.Log($"Cross has a hit!: {crossHit.point}");
         }
 
         GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;

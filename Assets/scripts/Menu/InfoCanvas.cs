@@ -88,25 +88,25 @@ public class InfoCanvas : MonoBehaviour
         if(RaceManager.Instance)
         {
             StartTitle.text = "Welcome to Level 1!";
-            StartText.text = "The goal to finish the racetrack in the given time. \n The red ring is the ring to follow in the course";
+            StartText.text = "The goal to finish the track in the given time. Use your lasergun (left-click) to destroy obstacles.";
 
             ResultTitle.text = "Passed level 1!";
-            ResultText.text = "Finished the race in {}!";
+            ResultText.text = "You've successfully passed the testing track!";
         }
         else if(meteorManager.instance)
         {
             StartTitle.text = "Welcome to Level 2!";
-            StartText.text = "A Meteorshower is set on impacting our spacestation." +
-            "Make sure the spacestation makes it through by destroying the meteors before impact.";
+            StartText.text = "Meteors are set on impacting our spacestation. " +
+            "Make sure the spacestation makes it through by destroying the meteors before impact!";
 
             ResultTitle.text = "Passed level 2!";
-            ResultText.text = "Finished the race in {}!";
+            ResultText.text = "You've succeeded in protecting the spacestation!";
         }
         else
         {
             StartTitle.text = "Welcome to Level 3!";
-            StartText.text = "Some people want to hunt you down." +
-            "Kill them and survive or die.";
+            StartText.text = "Some ship has appeared to hunt you down." +
+            "Kill them and survive, or die.";
 
             ResultTitle.text = "Passed the last level 3!";
             ResultText.text = "You have completed the last level!";

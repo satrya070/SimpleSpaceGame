@@ -46,7 +46,7 @@ public class AIShip : MonoBehaviour
             if(PlayerDist >= MinRangeDist)
             {
 
-                Debug.Log(rb.velocity.magnitude);
+                //Debug.Log(rb.velocity.magnitude);
                 if(PlayerDist >= (MinRangeDist + BrakeMark))
                 {
                     //Debug.Log(PlayerDist);

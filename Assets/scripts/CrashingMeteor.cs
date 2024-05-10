@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrashingMeteor : MonoBehaviour
 {
     public Transform crashPoint;
-    public float crashSpeed = 50000f;
+    public float crashSpeed; // = 7000f;
     Rigidbody rb;
     Damage SpaceshipDamage;
     Health health;
@@ -46,9 +46,9 @@ public class CrashingMeteor : MonoBehaviour
     {
         if (crashPoint)
         {
-            //Debug.Log("Moving rock!");
             Vector3 moveDirection = (crashPoint.position - transform.position).normalized;
-            rb.AddForce(moveDirection * crashSpeed);
+            Debug.Log($"Moving rock! {moveDirection} {moveDirection * crashSpeed}");
+            rb.AddForce(moveDirection * crashSpeed, ForceMode.Force);
         }
     }
 
