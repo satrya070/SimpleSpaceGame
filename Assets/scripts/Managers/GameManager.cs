@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<Health>();
+        AudioManager.Instance.PlayMusic($"level_{SceneManager.GetActiveScene().buildIndex}_track");
     }
 
     // Update is called once per frame
