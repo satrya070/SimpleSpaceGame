@@ -82,6 +82,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0e6d476a474d2b998bcffa1adc4f3175, type: 3}
   - name: level_2_track
     clip: {fileID: 8300000, guid: a8d5ee5b137f440df958f2f4fcb9deaa, type: 3}
+  - name: level_3_track
+    clip: {fileID: 8300000, guid: fd32a58dc91ae21ceb74c8bbeddcafa0, type: 3}
+  - name: level_0_track
+    clip: {fileID: 8300000, guid: 57b0696b1ef4829ff817b2ddd804e591, type: 3}
   sfxSounds:
   - name: LaserGun
     clip: {fileID: 8300000, guid: 1d648729201b7734eace5221ebf3977d, type: 3}

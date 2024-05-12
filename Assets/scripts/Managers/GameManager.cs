@@ -6,7 +6,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    Health playerHealth;
+    public Health playerHealth;
     public bool restartingScene;
     float LevelReloadTime = 3f;
     
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<Health>();
-        AudioManager.Instance.PlayMusic($"level_{SceneManager.GetActiveScene().buildIndex}_track");
+        //AudioManager.Instance.PlayMusic($"level_{SceneManager.GetActiveScene().buildIndex}_track");
     }
 
     // Update is called once per frame
@@ -65,10 +65,13 @@ public class GameManager : MonoBehaviour
 
     void PlayerDied()
     {
-        if(playerHealth.currentHealth <= 0)
+        if(playerHealth)
         {
-            // TODO player has died window
-            RestartLevel();
+            if(playerHealth.currentHealth <= 0)
+            {
+                // TODO player has died window
+                RestartLevel();
+            }
         }
     }
 

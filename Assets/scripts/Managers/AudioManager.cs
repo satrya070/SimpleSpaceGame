@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class AudioManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
+    private int currentSceneIndex;
 
     private void Awake()
     {
@@ -25,7 +27,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private void Start() {
-        //PlayMusic("LevelSound");
+        PlayMusic($"level_{SceneManager.GetActiveScene().buildIndex}_track");
     }
 
     public void PlayMusic(string name) {
@@ -52,6 +54,26 @@ public class AudioManager : MonoBehaviour
         else
         {
             sfxSource.PlayOneShot(sound.clip);
+        }
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"sceneIndex: {scene.buildIndex}");
+        if(currentSceneIndex != scene.buildIndex)
+        {
+            PlayMusic($"level_{scene.buildIndex}_track");
+            currentSceneIndex = scene.buildIndex;
         }
     }
 }
