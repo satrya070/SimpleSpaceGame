@@ -360,8 +360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   currentHealth: 0
-  explosion: {fileID: 0}
-  DeadSound: 
+  explosion: {fileID: 6296243866771450313, guid: f7cebc00acc0adb498e5c17d048bbfaf, type: 3}
+  DeadSound: enemyDeath
 --- !u!1 &6859978642516270746
 GameObject:
   m_ObjectHideFlags: 0

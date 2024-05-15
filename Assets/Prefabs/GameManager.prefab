@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d28f76b7b76e243792d15f8d7f61a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
   restartingScene: 0
   LevelStarted: 0
   LevelEnded: 0
@@ -93,6 +94,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 898e78a029b080b4b806ac9fc99be81c, type: 3}
   - name: ringCollect
     clip: {fileID: 8300000, guid: 10310847f7e66a442ac40762acb9d6b7, type: 3}
+  - name: enemyDeath
+    clip: {fileID: 8300000, guid: ebd12ead919006c48942fd15f88316ba, type: 3}
   musicSource: {fileID: 4496007366187075963}
   sfxSource: {fileID: 4243609272267779336}
 --- !u!1 &3870109948844516395

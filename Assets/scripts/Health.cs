@@ -61,14 +61,4 @@ public class Health : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //void OnCollisionEnter(Collision other)
-    //{
-    //    if (other.gameObject.tag == "PlayerSpaceShip")
-    //    {
-    //        //Debug.Log(other.gameObject.name);
-    //        CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
-    //        CombatHandler.ApplyDamage(gameObject, collisionDamage);
-    //    }
-    //}
 }
