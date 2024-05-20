@@ -54,7 +54,8 @@ public class AIGun : MonoBehaviour
         laser.GetComponent<ShotBehavior>().setTargetComponents(
             shipOwner.gameObject.tag,
             transform.position + (PlayerDirection * LaserRange),
-            shipOwner.GetComponent<Damage>()
+            shipOwner.GetComponent<Damage>(),
+            shipOwner.gameObject.tag
         );
     }
 }

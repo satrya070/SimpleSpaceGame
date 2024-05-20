@@ -27,8 +27,14 @@ public class RacePoint : MonoBehaviour
             if(RaceManager.Instance.racePoints[0] == gameObject)
             {
                 RaceManager.Instance.racePoints.RemoveAt(0);
-                Debug.Log("next mark collected!");
+                //Debug.Log("next mark collected!");
+                AudioManager.Instance.PlaySfx("ringCollect");
                 Destroy(gameObject);
+
+                if(!RaceManager.Instance.RaceFinished)
+                {
+                    RaceManager.Instance.MarkNextPoint();
+                }
             }
         }
     }

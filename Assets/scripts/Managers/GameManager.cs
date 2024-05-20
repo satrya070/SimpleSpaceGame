@@ -6,18 +6,13 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    Health playerHealth;
-    bool restartingScene;
-    float LevelReloadTime = 5f;
-
-    public RaceManager raceManager;
-    public meteorManager meteorManager;
+    public Health playerHealth;
+    public bool restartingScene;
+    float LevelReloadTime = 3f;
     
     public bool LevelStarted;
-
     public bool LevelEnded;
     public bool LevelPassed;
-
     public bool LevelPaused;
 
     public static GameManager GameManagerInstance;
@@ -36,13 +31,6 @@ public class GameManager : MonoBehaviour
             GameManagerInstance = this;
         }
 
-
-        GameObject raceManagerObject = GameObject.FindWithTag("RaceManager");
-        raceManager = raceManagerObject ? raceManagerObject.GetComponent<RaceManager>() : null;
-
-        GameObject meteorManagerObject = GameObject.FindWithTag("MeteorManager");
-        meteorManager = meteorManagerObject ? meteorManagerObject.GetComponent<meteorManager>() : null;
-
         // specific situations where damage should be different
         specialBehaviour.Add(Tuple.Create("Player", "SpaceStation"), 1);
 
@@ -50,8 +38,9 @@ public class GameManager : MonoBehaviour
         LevelEndConditions.Add(1, MonitorRace);
         LevelEndConditions.Add(2, MonitorMeteors);
         LevelEndConditions.Add(3, MonitorHunters);
-        // TODO add lv3 AI manager
-        
+
+        // on each scene reload(restart/nextlevel) reset manager variables
+        ResetGamemanagerVariables();
     }
 
     // Start is called before the first frame update
@@ -59,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<Health>();
+        //AudioManager.Instance.PlayMusic($"level_{SceneManager.GetActiveScene().buildIndex}_track");
     }
 
     // Update is called once per frame
@@ -75,25 +65,28 @@ public class GameManager : MonoBehaviour
 
     void PlayerDied()
     {
-        if(playerHealth.currentHealth <= 0)
+        if(playerHealth)
         {
-            // TODO player has died window
-            RestartLevel();
+            if(playerHealth.currentHealth <= 0)
+            {
+                // TODO player has died window
+                RestartLevel();
+            }
         }
     }
 
     public void MonitorRace()
     {
-        if(raceManager & !LevelEnded)
+        if(RaceManager.Instance & RaceManager.Instance.RaceFinished & !LevelEnded)
         {
-            if(raceManager.RaceFinished & raceManager.RacePassed)
+            if(RaceManager.Instance & RaceManager.Instance.RacePassed)
             {
-                Debug.Log("Passed mission");
                 LevelEnded = true;
+                LevelPassed = true;
+                Debug.Log($"Passed mission: {LevelEnded}");
             }
-            else if(raceManager.RaceFinished & !raceManager.RacePassed)
+            else if(RaceManager.Instance & !RaceManager.Instance.RacePassed)
             {
-                Debug.Log("Failed mission");
                 // fail window
                 LevelEnded = true;
                 RestartLevel();
@@ -103,34 +96,50 @@ public class GameManager : MonoBehaviour
 
     public void MonitorMeteors()
     {
-        if(meteorManager & !LevelEnded)
+        if(meteorManager.instance & !LevelEnded)
         {
-            if(!meteorManager.SpaceStation)
+            if(!meteorManager.instance.SpaceStation)
             {
                 Debug.Log("SpaceStation dead!!");
                 LevelEnded = true;
                 RestartLevel();
             }
 
-            if(meteorManager.MeteorsPassed)
+            if(meteorManager.instance.MeteorsPassed)
             {
                 LevelEnded = true;
+                LevelPassed= true;
                 Debug.Log("passed!!! next level");
-                Debug.Log(GameManager.GameManagerInstance.LevelEnded);
             }
         }
     }
 
     public void MonitorHunters()
     {
+        if(LevelPassed & !LevelEnded)
+        {
+            Debug.Log("Killed all emenymies");
+            LevelEnded = true;
+        }
+    }
+
+    public void ResetGamemanagerVariables()
+    {
+        GameManagerInstance.LevelEnded = false;
+        GameManagerInstance.LevelPassed = false;
+        GameManagerInstance.LevelStarted = false;
+        GameManagerInstance.LevelPaused = false;
     }
 
     public void RestartLevel()
     {
         if(!restartingScene)
         {
-            LevelPaused = false;
+            //LevelPaused = false;
+            //Debug.Log("restarting missoin");
             restartingScene = true;
+            ResetGamemanagerVariables();
+            //Debug.Log("caliing coroutine restarts");
             StartCoroutine(ReloadSceneDelay());
         }
     }
@@ -139,6 +148,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(LevelReloadTime);
 
+        restartingScene = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

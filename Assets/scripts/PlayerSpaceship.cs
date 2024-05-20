@@ -44,8 +44,7 @@ public class PlayerSpaceship : MonoBehaviour
         //Debug.Log($"X: {mouseInputX}, Y: {mouseInputY}");
 
         // temp debug test for damage
-        TestDamage();
-       
+        //TestDamage();
     }
 
     void FixedUpdate()

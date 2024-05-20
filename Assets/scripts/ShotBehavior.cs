@@ -5,11 +5,11 @@ using System;
 public class ShotBehavior: MonoBehaviour
 {
 	public Vector3 m_target;
-	//GameObject collisionExplosion;
 	public float speed;
 	string HitterTag;
+	string ownerTag;
 
-	private bool HasHit;
+    private bool HasHit;
 	private float EndExistTime;
 	private float ExistTime = 2f;
 	Damage DamageObj;
@@ -20,8 +20,9 @@ public class ShotBehavior: MonoBehaviour
 		MoveLaser();
 	}
 
-	public void setTargetComponents(string _HitterTag, Vector3 target, Damage _DamageObj)
+	public void setTargetComponents(string _HitterTag, Vector3 target, Damage _DamageObj, string OwnerTag)
 	{
+		ownerTag = OwnerTag;
 		HitterTag = _HitterTag;
 		m_target = target;
 		EndExistTime = Time.time + ExistTime;
@@ -40,9 +41,9 @@ public class ShotBehavior: MonoBehaviour
 		}
 
 		// if hittable and only first registered collision
-		if(hitObject.GetComponent<Health>() != null & !HasHit)
+		if(hitObject.GetComponent<Health>() != null & !HasHit & HitterTag != hitObject.tag)
 		{
-			Debug.Log(HitterTag);
+			Debug.Log($"{hitObject.tag} - {ownerTag}");
 			HasHit = true;
 			//Debug.Log($"{hitObject.name} <- {shooterObject.name}:{shooterObject.GetComponent<Damage>().DamagePoints}");
 			CombatHandler.ApplyDamage(hitObject, DamageObj);
@@ -64,16 +65,4 @@ public class ShotBehavior: MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, m_target, step);
 		}
 	}
-
-	// void explode()
-	// {
-	// 	if (collisionExplosion != null)
-	// 	{
-	// 		GameObject explosion = (GameObject)Instantiate(
-	// 			collisionExplosion, transform.position, transform.rotation
-	// 		);
-	// 		Destroy(gameObject);
-	// 		Destroy(explosion, 1f);
-	// 	}
-	// }
 }

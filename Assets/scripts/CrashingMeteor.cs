@@ -5,46 +5,67 @@ using UnityEngine;
 public class CrashingMeteor : MonoBehaviour
 {
     public Transform crashPoint;
-    public float crashSpeed = 100f;
+    public float crashSpeed; // = 7000f;
     Rigidbody rb;
-    Damage damage;
+    Damage SpaceshipDamage;
+    Health health;
+    bool HasCollided;
 
     [SerializeField]
     GameObject explosion;
 
     List<string> TargetTags = new List<string>() {"Player", "SpaceStation" };
+    public Damage collisionDamage;
+    public Damage PlayerCollisionDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        damage = GetComponent<Damage>();
+        SpaceshipDamage = GetComponent<Damage>();
+        health = GetComponent<Health>();
+
+        SetCollisionDamage();
+    }
+
+    void SetCollisionDamage()
+    {
+        collisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+        PlayerCollisionDamage = gameObject.AddComponent(typeof(Damage)) as Damage;
+
+        collisionDamage.DamagePoints = 25;
+        PlayerCollisionDamage.DamagePoints = 20;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(crashPoint)
+    }
+
+    void FixedUpdate()
+    {
+        if (crashPoint)
         {
-            //Debug.Log("Moving rock!");
             Vector3 moveDirection = (crashPoint.position - transform.position).normalized;
-            rb.AddForce(moveDirection * crashSpeed);
+            Debug.Log($"Moving rock! {moveDirection} {moveDirection * crashSpeed}");
+            rb.AddForce(moveDirection * crashSpeed, ForceMode.Force);
         }
     }
 
     void OnCollisionEnter(Collision other) {
-        if (TargetTags.Contains(other.gameObject.tag))
+        if (TargetTags.Contains(other.gameObject.tag) & !HasCollided)
         {
-            Debug.Log(other.gameObject.name);
-            CombatHandler.ApplyDamage(other.gameObject, damage);
+            HasCollided = true;
 
-            if (explosion)
+            if (other.gameObject.tag == "SpaceStation")
             {
-                GameObject explode = Instantiate(explosion, transform.position, transform.rotation);//.parent.transform);
-                Destroy(explode, 1f);
+                CombatHandler.ApplyDamage(other.gameObject, SpaceshipDamage);
             }
-
-            Destroy(gameObject);
+            else
+            {
+                CombatHandler.ApplyDamage(other.gameObject, PlayerCollisionDamage);
+            }
+            CombatHandler.ApplyDamage(gameObject, collisionDamage);
         }
     }
 }

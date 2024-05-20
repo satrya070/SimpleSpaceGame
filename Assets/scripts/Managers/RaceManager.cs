@@ -16,7 +16,11 @@ public class RaceManager : MonoBehaviour
     public bool RaceFinished = false;
     public bool RacePassed = false;
 
-    // Start is called before the first frame update
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         Instance = this;
@@ -38,6 +42,11 @@ public class RaceManager : MonoBehaviour
             int seconds = Mathf.FloorToInt(Countdown % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
+    }
+
+    public void MarkNextPoint()
+    {
+        racePoints[0].transform.localScale = racePoints[0].transform.localScale * 1.5f;
     }
 
     void RaceResult()

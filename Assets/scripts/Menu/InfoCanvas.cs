@@ -9,6 +9,7 @@ public class InfoCanvas : MonoBehaviour
     GameObject StartPanel;
     GameObject ResultPanel;
     GameObject PausePanel;
+    GameObject GameoverPanel;
 
     TextMeshProUGUI StartTitle;
     TextMeshProUGUI StartText;
@@ -26,6 +27,7 @@ public class InfoCanvas : MonoBehaviour
         StartPanel = transform.Find("StartPanel").gameObject;
         ResultPanel = transform.Find("ResultPanel").gameObject;
         PausePanel = transform.Find("PausePanel").gameObject;
+        GameoverPanel = transform.Find("GameoverPanel").gameObject;
 
         StartTitle = StartPanel.transform.Find("InfoTitle").GetComponent<TextMeshProUGUI>();
         StartText = StartPanel.transform.Find("InfoText").GetComponent<TextMeshProUGUI>();
@@ -50,8 +52,15 @@ public class InfoCanvas : MonoBehaviour
     {
         if(GameManager.GameManagerInstance.LevelEnded)
         {
-            Cursor.lockState = CursorLockMode.None;
-            ResultPanel.SetActive(true);
+            if (GameManager.GameManagerInstance.LevelPassed)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                ResultPanel.SetActive(true);
+            }
+            else
+            {
+                GameoverPanel.SetActive(true);
+            }
         }
     }
 
@@ -76,23 +85,31 @@ public class InfoCanvas : MonoBehaviour
 
     void SetlevelText()
     {
-        if(GameManager.GameManagerInstance.raceManager)
+        if(RaceManager.Instance)
         {
             StartTitle.text = "Welcome to Level 1!";
-            StartText.text = "The goal to finish the racetrack in the given time. \n The red ring is the ring to follow in the course";
+            StartText.text = "The goal to finish the track in the given time. Use your lasergun (left-click) to destroy obstacles.";
 
             ResultTitle.text = "Passed level 1!";
-            ResultText.text = "Finished the race in {}!";
+            ResultText.text = "You've successfully passed the testing track!";
         }
-        else if(GameManager.GameManagerInstance.meteorManager)
+        else if(meteorManager.instance)
         {
             StartTitle.text = "Welcome to Level 2!";
-            StartText.text = "A Meteorshower is set on impacting our spacestation." +
-            "Make sure the spacestation makes it through by destroying the meteors before impact.";
+            StartText.text = "Meteors are set on impacting our spacestation. " +
+            "Make sure the spacestation makes it through by destroying the meteors before impact!";
 
-            GameManager.GameManagerInstance.meteorManager.SpaceStation.gameObject.GetComponent<Health>();
             ResultTitle.text = "Passed level 2!";
-            ResultText.text = "Finished the race in {}!";
+            ResultText.text = "You've succeeded in protecting the spacestation!";
+        }
+        else
+        {
+            StartTitle.text = "Welcome to Level 3!";
+            StartText.text = "Some ship has appeared to hunt you down." +
+            "Kill them and survive, or die.";
+
+            ResultTitle.text = "Passed the last level 3!";
+            ResultText.text = "You have completed the last level!";
         }
     }
 
@@ -106,6 +123,14 @@ public class InfoCanvas : MonoBehaviour
 
     public void NextLevelButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // next level and on last level load main menu
+        if (SceneManager.GetActiveScene().buildIndex < 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }
