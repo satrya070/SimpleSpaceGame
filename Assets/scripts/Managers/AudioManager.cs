@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
     private int currentSceneIndex;
+    [SerializeField] bool playMusic;
 
     private void Awake()
     {
@@ -39,8 +40,11 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            musicSource.clip = sound.clip;
-            musicSource.Play();
+            if (playMusic)
+            {
+                musicSource.clip = sound.clip;
+                musicSource.Play();
+            }
         }
     }
 
