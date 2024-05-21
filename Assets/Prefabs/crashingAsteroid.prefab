@@ -176,7 +176,7 @@ MonoBehaviour:
   maxHealth: 25
   currentHealth: 0
   explosion: {fileID: 6296243866771450313, guid: f7cebc00acc0adb498e5c17d048bbfaf, type: 3}
-  DeadSound: 
+  DeadSound: MeteorDeath
 --- !u!135 &5957440449360474200
 SphereCollider:
   m_ObjectHideFlags: 0
